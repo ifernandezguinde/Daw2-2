@@ -70,6 +70,76 @@ class FrontController
         );
 
         Route::add(
+            '/ejercicio1-estructuras',
+            function () {
+                $controlador = new \Com\Daw2\Controllers\EjerciciosDecisionController();
+                $controlador->ejercicio1estructuras();
+
+            },
+            'get'
+        );
+
+        Route::add(
+            '/ejercicio2-estructuras',
+            function () {
+                $controlador = new \Com\Daw2\Controllers\EjerciciosDecisionController();
+                $controlador->ejercicio2estructuras();
+
+            },
+            'get'
+        );
+
+        Route::add(
+            '/ejercicio3-estructuras',
+            function () {
+                $controlador = new \Com\Daw2\Controllers\EjerciciosDecisionController();
+                $controlador->ejercicio3estructuras();
+
+            },
+            'get'
+        );
+
+        Route::add(
+            '/ejercicio4-estructuras',
+            function () {
+                $controlador = new \Com\Daw2\Controllers\EjerciciosDecisionController();
+                $controlador->ejercicio4estructuras();
+
+            },
+            'get'
+        );
+
+        Route::add(
+            '/ejercicio5-estructuras',
+            function () {
+                $controlador = new \Com\Daw2\Controllers\EjerciciosDecisionController();
+                $controlador->ejercicio5estructuras();
+
+            },
+            'get'
+        );
+
+        Route::add(
+            '/ejercicio6-estructuras',
+            function () {
+                $controlador = new \Com\Daw2\Controllers\EjerciciosDecisionController();
+                $controlador->ejercicio6estructuras();
+
+            },
+            'get'
+        );
+
+        Route::add(
+            '/ejercicio7-estructuras',
+            function () {
+                $controlador = new \Com\Daw2\Controllers\EjerciciosDecisionController();
+                $controlador->ejercicio7estructuras();
+
+            },
+            'get'
+        );
+
+        Route::add(
             '/demo-proveedores',
             function () {
                 $controlador = new \Com\Daw2\Controllers\InicioController();

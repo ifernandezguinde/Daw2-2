@@ -32,7 +32,7 @@
                 <a href="#" class="nav-link">
                     <i class="fas fa-biohazard"></i>
                     <p>
-                        Operadores
+                        OPERADORES
                         <i class="right fas fa-angle-left"></i>
                     </p>
                 </a>
@@ -40,25 +40,79 @@
                     <li class="nav-item">
                         <a href="ejercicio1-operadores" class="nav-link">
                             <i class="fas fa-biohazard"></i>
-                            <p>OPERADORES 1</p>
+                            <p>Operadores 1</p>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a href="ejercicio2-operadores" class="nav-link">
                             <i class="fas fa-biohazard"></i>
-                            <p>OPERADORES 1</p>
+                            <p>Operadores 2</p>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a href="ejercicio3-operadores" class="nav-link">
                             <i class="fas fa-biohazard"></i>
-                            <p>OPERADORES 1</p>
+                            <p>Operadores 3</p>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a href="ejercicio4-operadores" class="nav-link">
                             <i class="fas fa-biohazard"></i>
-                            <p>OPERADORES 1</p>
+                            <p>Operadores 4</p>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="nav-item menu-open">
+                <a href="#" class="nav-link">
+                    <i class="fas fa-biohazard"></i>
+                    <p>
+                        ESTRUCTURAS
+                        <i class="right fas fa-angle-left"></i>
+                    </p>
+                </a>
+                <ul class="nav nav-treeview">
+                    <li class="nav-item">
+                        <a href="ejercicio1-estructuras" class="nav-link">
+                            <i class="fas fa-biohazard"></i>
+                            <p>Estructuras 1</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="ejercicio2-estructuras" class="nav-link">
+                            <i class="fas fa-biohazard"></i>
+                            <p>Estructuras 2</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="ejercicio3-estructuras" class="nav-link">
+                            <i class="fas fa-biohazard"></i>
+                            <p>Estructuras 3</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="ejercicio4-estructuras" class="nav-link">
+                            <i class="fas fa-biohazard"></i>
+                            <p>Estructuras 4</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="ejercicio5-estructuras" class="nav-link">
+                            <i class="fas fa-biohazard"></i>
+                            <p>Estructuras 5</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="ejercicio6-estructuras" class="nav-link">
+                            <i class="fas fa-biohazard"></i>
+                            <p>Estructuras 6</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="ejercicio7-estructuras" class="nav-link">
+                            <i class="fas fa-biohazard"></i>
+                            <p>Estructuras 7</p>
                         </a>
                     </li>
                 </ul>
