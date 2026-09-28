@@ -140,6 +140,63 @@ class FrontController
         );
 
         Route::add(
+            '/ejercicio1-iterativas',
+            function () {
+                $controlador = new \Com\Daw2\Controllers\IterativasController();
+                $controlador->ejercicio1iterativas();
+
+            },
+            'get'
+        );
+
+        Route::add(
+            '/ejercicio1-iterativas',
+            function () {
+                $controlador = new \Com\Daw2\Controllers\IterativasController();
+                $controlador->doEjercicio1iterativas();
+            },
+            'post'
+        );
+
+        Route::add(
+            '/ejercicio2-iterativas',
+            function () {
+                $controlador = new \Com\Daw2\Controllers\IterativasController();
+                $controlador->ejercicio2iterativas();
+
+            },
+            'get'
+        );
+
+        Route::add(
+            '/ejercicio2-iterativas',
+            function () {
+                $controlador = new \Com\Daw2\Controllers\IterativasController();
+                $controlador->doEjercicio2iterativas();
+            },
+            'post'
+        );
+
+        Route::add(
+            '/ejercicio3-iterativas',
+            function () {
+                $controlador = new \Com\Daw2\Controllers\IterativasController();
+                $controlador->ejercicio3iterativas();
+
+            },
+            'get'
+        );
+
+        Route::add(
+            '/ejercicio3-iterativas',
+            function () {
+                $controlador = new \Com\Daw2\Controllers\IterativasController();
+                $controlador->doEjercicio3iterativas();
+            },
+            'post'
+        );
+
+        Route::add(
             '/demo-proveedores',
             function () {
                 $controlador = new \Com\Daw2\Controllers\InicioController();

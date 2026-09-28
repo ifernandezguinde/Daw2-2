@@ -117,6 +117,41 @@
                     </li>
                 </ul>
             </li>
+
+            <li class="nav-item menu-open">
+                <a href="#" class="nav-link">
+                    <i class="fas fa-biohazard"></i>
+                    <p>
+                        ITERATIVAS
+                        <i class="right fas fa-angle-left"></i>
+                    </p>
+                </a>
+                <ul class="nav nav-treeview">
+                    <li class="nav-item">
+                        <a href="ejercicio1-iterativas" class="nav-link">
+                            <i class="fas fa-biohazard"></i>
+                            <p>Iterativas 1</p>
+                        </a>
+                    </li>
+                </ul>
+                <ul class="nav nav-treeview">
+                    <li class="nav-item">
+                        <a href="ejercicio2-iterativas" class="nav-link">
+                            <i class="fas fa-biohazard"></i>
+                            <p>Iterativas 2</p>
+                        </a>
+                    </li>
+                </ul>
+                <ul class="nav nav-treeview">
+                    <li class="nav-item">
+                        <a href="ejercicio3-iterativas" class="nav-link">
+                            <i class="fas fa-biohazard"></i>
+                            <p>Iterativas 3</p>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
         </ul>
       </nav>
       <!-- /.sidebar-menu -->
