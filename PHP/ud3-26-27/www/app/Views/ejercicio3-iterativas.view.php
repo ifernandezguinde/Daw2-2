@@ -7,7 +7,7 @@ declare(strict_types=1);
     if (isset($matriz)):
         ?>
         <div class="col-12 alert alert-success">
-            <p>Numeros ordenados: <?php echo $matriz ?></p>
+            <p>Matriz ordenada: <br> <?php echo $matriz ?></p>
         </div>
     <?php endif; ?>
     <div class="col-12">
@@ -23,7 +23,7 @@ declare(strict_types=1);
                     <div class="row">
                         <div class="col-12">
                             <div class="mb-3">
-                                <label for="numeros">Números a ordenar:</label>
+                                <label for="numeros">Matriz a ordenar:</label>
                                 <input type="text" class="form-control" name="numeros" id="numeros" value="" />
                                 <p class="text-danger small"><?php echo $error ?? ''; ?></p>
                             </div>
