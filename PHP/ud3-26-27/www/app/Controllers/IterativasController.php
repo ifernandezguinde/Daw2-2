@@ -98,76 +98,117 @@ class IterativasController extends BaseController
         return true;
     }
 
-    public function ejercicio3iterativas(string $numeros = '' , array $errores = []): void
+    public function ejercicio3iterativas(string $numeros = '', array $errores = [], array $resultado): void
     {
         $data = array(
             'titulo' => 'Ejercicios iterativas',
-            'breadcrumb' => ['Inicio', 'Ordenar'],
+            'breadcrumb' => ['Inicio', 'Ordenar matriz'],
         );
-
+        $data['errores'] = $errores;
+        $data['numeros'] = $numeros;
+        $data['resultado'] = $resultado;
         $this->view->showViews(array('templates/header.view.php', 'ejercicio3-iterativas.view.php', 'templates/footer.view.php'), $data);
     }
 
     public function doEjercicio3iterativas(): void
     {
         $errores = $this->checkEjercicio3($_POST);
-        if ($errores !== true) {
+        $inputNumeros = filter_var($_POST['numeros'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        if ($errores === []) {
+            //Hacemos el trabajo
+            $aux = explode('|', $_POST['numeros']);
 
-            $numeros = $_POST['numeros'];
-            $check = $this->checkEjercicio3($numeros);
-            if ($check === true) {
-
-                $filas = explode('|', $numeros);
-                $columnas = count(explode(',', $filas[0]));
-
-
-                $arrayLimpio = str_replace('|', ',', $numeros);
-                $arrayNumero = explode(',', $arrayLimpio);
-
-                sort($arrayNumero);
-
-                $matriz = array_chunk($arrayNumero, $columnas);
-
-                $matriztexto = '';
-                foreach ($matriz as $fila) {
-                    $matriztexto .= implode(' ', array_map('trim', $fila)) . '<br>';
+            $numeros = [];
+            foreach ($aux as $ns) {
+                $arrayNumeros = explode(',', $ns);
+                if(!isset($numColumnas)) {
+                    $numColumnas = count($arrayNumeros);
                 }
-
-                $data['matriz'] = $matriztexto;
-                $this->view->showViews(array('templates/header.view.php', 'ejercicio3-iterativas.view.php', 'templates/footer.view.php'), $data);
-            } else {
-                $data['error'] = $check;
-                $this->view->showViews(array('templates/header.view.php', 'ejercicio3-iterativas.view.php', 'templates/footer.view.php'), $data);
+                $numeros = array_merge($numeros, $arrayNumeros);
             }
+            sort($numeros);
+            $matriz = $this->montarMatriz($numeros, $numColumnas);
+            $this->ejercicio3iterativas($inputNumeros, [], $matriz);
+
         } else {
-            $this->ejercicio3iterativas(filter_var($_POST['numeros'], FILTER_SANITIZE_FULL_SPECIAL_CHARS));
+            $this->ejercicio3iterativas($inputNumeros, $errores);
         }
     }
 
-    private function checkEjercicio3(string $numeros): string|true
+    private function montarMatriz(array $plano, int $numColumnas): array
     {
-        if ($numeros === '') {
-            return 'Debe ingresar numeros';
-        }
-
-        $filas = explode('|', $numeros);
-        $columnas = null;
-
-        foreach ($filas as $fila) {
-            $elementos = explode(',', $fila);
-
-            if ($columnas === null) {
-                $columnas = count($elementos);
-            } elseif (count($elementos) !== $columnas) {
-                return 'Todas as líneas deben ter a misma cantidad de números';
+        $matriz = [];
+        $aux = [];
+        foreach($plano as $numero) {
+            $aux[] = $numero;
+            if (count($aux) === $numColumnas) {
+                $matriz[] = $aux;
+                $aux = [];
             }
+        }
+        return $matriz;
+    }
 
-            foreach ($elementos as $numero) {
+
+    private function checkEjercicio3(array $data): array
+    {
+        $errores = [];
+        if (empty($data['numeros'])) {
+            $errores['numeros'] = 'Campo obligatorio';
+        } else {
+            $aux = explode('|', $data['numeros']);
+            //Primero comprobamos que todas las filas tengan el mismo número de elementos
+            foreach ($aux as $array) {
+                if (!isset($numColumnas)) {
+                    $numColumnas = count(explode(',', $array));
+                } else if ($numColumnas !== count(explode(',', $array))) {
+                    $errores['numeros'] = 'Las filas deben tener el mismo número de columnas.';
+                }
+            }
+            $numeros = [];
+            //Aplanamos y comprobamos que son números
+            foreach ($aux as $ns) {
+                $numeros = array_merge($numeros,  explode(',', $ns));
+            }
+            foreach ($numeros as $numero) {
                 if (!is_numeric($numero)) {
-                    return 'Debe ingresar numeros separados por comas';
+                    $errores['numeros'] = "El valor '$numero' no es un número";
                 }
             }
         }
-        return true;
+        return $errores;
+    }
+
+    public function ejercicio4iterativas(string $texto = '', array $errores = [], array $resultado): void
+    {
+        $data = array(
+            'titulo' => 'Ejercicios iterativas',
+            'breadcrumb' => ['Inicio', 'Ordenar matriz'],
+        );
+        $data['errores'] = $errores;
+        $data['texto'] = $texto;
+        $data['resultado'] = $resultado;
+        $this->view->showViews(array('templates/header.view.php', 'ejercicio4-iterativas.view.php', 'templates/footer.view.php'), $data);
+    }
+
+    public function doEjercicio4iterativas(): void
+    {
+        $errores = $this->checkEjercicio4($_POST);
+        $texto = filter_var(mb_strtolower($_POST['texto'], FILTER_SANITIZE_FULL_SPECIAL_CHARS));
+        if ($errores === []) {
+            $resultado = sort(array_count_values(str_split($texto)));
+            $this->ejercicio4iterativas($texto, [], $resultado);
+        } else {
+            $this->ejercicio4iterativas($texto, $errores);
+        }
+    }
+
+    private function checkEjercicio4(array $data): array
+    {
+        $errores = [];
+        if (empty($data['texto'])) {
+            $errores['vacio'] = 'Campo obligatorio';
+        }
+        return $errores;
     }
 }

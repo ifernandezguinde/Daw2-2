@@ -1,0 +1,41 @@
+<?php
+
+declare(strict_types=1);
+?>
+<div class="row">
+    <?php
+    if (isset($resultado)):
+        ?>
+        <div class="col-12 alert alert-success">
+            <p>Numeros ordenados: <?php echo $resultado ?></p>
+        </div>
+    <?php endif; ?>
+    <div class="col-12">
+        <div class="card shadow mb-4">
+            <form method="post" action="">
+                <div
+                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">Listado letras repetidas de menor a mayor</h6>
+                </div>
+                <!-- Card Body -->
+                <div class="card-body">
+                    <!--<form action="./?sec=formulario" method="post">                   -->
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="mb-3">
+                                <label for="numeros">palabra a ordenar:</label>
+                                <input type="text" class="form-control" name="numeros" id="numeros" value="" />
+                                <p class="text-danger small"><?php echo $error ?? ''; ?></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="col-12 text-right">
+                        <input type="submit" value="Ordenar listado" name="enviar" class="btn btn-primary ml-2"/>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

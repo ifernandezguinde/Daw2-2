@@ -197,6 +197,25 @@ class FrontController
         );
 
         Route::add(
+            '/ejercicio4-iterativas',
+            function () {
+                $controlador = new \Com\Daw2\Controllers\IterativasController();
+                $controlador->ejercicio4iterativas();
+
+            },
+            'get'
+        );
+
+        Route::add(
+            '/ejercicio4-iterativas',
+            function () {
+                $controlador = new \Com\Daw2\Controllers\IterativasController();
+                $controlador->doEjercicio4iterativas();
+            },
+            'post'
+        );
+
+        Route::add(
             '/demo-proveedores',
             function () {
                 $controlador = new \Com\Daw2\Controllers\InicioController();
