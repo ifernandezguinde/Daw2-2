@@ -4,10 +4,14 @@ declare(strict_types=1);
 ?>
 <div class="row">
     <?php
-    if (isset($resultado)):
-        ?>
+    if (isset($resultado) && $resultado !== []): ?>
         <div class="col-12 alert alert-success">
-            <p>Numeros ordenados: <?php echo $resultado ?></p>
+            <h3>Letras repetidas: </h3>
+            <ul class="mb-0">
+                <?php foreach ($resultado as $letra => $cantidad): ?>
+                    <li><strong><?= htmlspecialchars((string)$letra) ?></strong> => <?= $cantidad ?> </li>
+                <?php endforeach; ?>
+            </ul>
         </div>
     <?php endif; ?>
     <div class="col-12">
@@ -15,7 +19,7 @@ declare(strict_types=1);
             <form method="post" action="">
                 <div
                     class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-primary">Listado letras repetidas de menor a mayor</h6>
+                    <h6 class="m-0 font-weight-bold text-primary">Listado letras repetidas de mayor a menor</h6>
                 </div>
                 <!-- Card Body -->
                 <div class="card-body">
@@ -23,9 +27,17 @@ declare(strict_types=1);
                     <div class="row">
                         <div class="col-12">
                             <div class="mb-3">
-                                <label for="numeros">palabra a ordenar:</label>
-                                <input type="text" class="form-control" name="numeros" id="numeros" value="" />
-                                <p class="text-danger small"><?php echo $error ?? ''; ?></p>
+                                <label for="numeros">palabra:</label>
+                                <input type="text" class="form-control" name="texto" id="texto" value="" />
+
+                                <?php if (!empty($errores)): ?>
+                                    <div class="text-danger small mt-1">
+                                        <?php foreach ($errores as $error): ?>
+                                            <p class="mb-0"><?php echo $error; ?></p>
+                                        <?php endforeach; ?>
+                                    </div>
+                                <?php endif; ?>
+
                             </div>
                         </div>
                     </div>

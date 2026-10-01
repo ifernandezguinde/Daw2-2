@@ -98,7 +98,7 @@ class IterativasController extends BaseController
         return true;
     }
 
-    public function ejercicio3iterativas(string $numeros = '', array $errores = [], array $resultado): void
+    public function ejercicio3iterativas(string $numeros = '', array $errores = [], array $resultado = []): void
     {
         $data = array(
             'titulo' => 'Ejercicios iterativas',
@@ -117,8 +117,8 @@ class IterativasController extends BaseController
         if ($errores === []) {
             //Hacemos el trabajo
             $aux = explode('|', $_POST['numeros']);
-
             $numeros = [];
+
             foreach ($aux as $ns) {
                 $arrayNumeros = explode(',', $ns);
                 if(!isset($numColumnas)) {
@@ -179,7 +179,7 @@ class IterativasController extends BaseController
         return $errores;
     }
 
-    public function ejercicio4iterativas(string $texto = '', array $errores = [], array $resultado): void
+    public function ejercicio4iterativas(string $texto = '', array $errores = [], array $resultado = []): void
     {
         $data = array(
             'titulo' => 'Ejercicios iterativas',
@@ -193,10 +193,18 @@ class IterativasController extends BaseController
 
     public function doEjercicio4iterativas(): void
     {
+
         $errores = $this->checkEjercicio4($_POST);
-        $texto = filter_var(mb_strtolower($_POST['texto'], FILTER_SANITIZE_FULL_SPECIAL_CHARS));
+        $inputTexto = $_POST['texto'] ?? '';
+        $texto = filter_var($inputTexto, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
         if ($errores === []) {
-            $resultado = sort(array_count_values(str_split($texto)));
+            $textominuscula = mb_strtolower($texto);
+            $caracteres = mb_str_split($textominuscula);
+
+            $resultado = array_count_values($caracteres);
+            arsort($resultado);
+
             $this->ejercicio4iterativas($texto, [], $resultado);
         } else {
             $this->ejercicio4iterativas($texto, $errores);
@@ -207,7 +215,7 @@ class IterativasController extends BaseController
     {
         $errores = [];
         if (empty($data['texto'])) {
-            $errores['vacio'] = 'Campo obligatorio';
+            $errores['texto'] = 'Campo obligatorio';
         }
         return $errores;
     }
