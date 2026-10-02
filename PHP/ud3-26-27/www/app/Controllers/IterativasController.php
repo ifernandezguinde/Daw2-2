@@ -8,6 +8,7 @@ use Com\Daw2\Core\BaseController;
 
 class IterativasController extends BaseController
 {
+    // EJERCICIO 1
     public function ejercicio1iterativas(): void
     {
         $data = array(
@@ -53,6 +54,7 @@ class IterativasController extends BaseController
         return true;
     }
 
+    // EJERCICIO 2
     public function ejercicio2iterativas(): void
     {
         $data = array(
@@ -98,6 +100,7 @@ class IterativasController extends BaseController
         return true;
     }
 
+    // EJERCICIO 3
     public function ejercicio3iterativas(string $numeros = '', array $errores = [], array $resultado = []): void
     {
         $data = array(
@@ -179,11 +182,12 @@ class IterativasController extends BaseController
         return $errores;
     }
 
+    // EJERCICIO 4
     public function ejercicio4iterativas(string $texto = '', array $errores = [], array $resultado = []): void
     {
         $data = array(
             'titulo' => 'Ejercicios iterativas',
-            'breadcrumb' => ['Inicio', 'Ordenar matriz'],
+            'breadcrumb' => ['Inicio', 'Contar Letras'],
         );
         $data['errores'] = $errores;
         $data['texto'] = $texto;
@@ -219,4 +223,100 @@ class IterativasController extends BaseController
         }
         return $errores;
     }
+
+    // EJERCICIO 5
+    public function ejercicio5iterativas(string $texto = '', array $errores = [], array $resultado = []): void
+    {
+        $data = array(
+            'titulo' => 'Ejercicios iterativas',
+            'breadcrumb' => ['Inicio', 'Contar Palabras'],
+        );
+        $data['errores'] = $errores;
+        $data['texto'] = $texto;
+        $data['resultado'] = $resultado;
+        $this->view->showViews(array('templates/header.view.php', 'ejercicio5-iterativas.view.php', 'templates/footer.view.php'), $data);
+    }
+
+    public function doEjercicio5iterativas(): void
+    {
+
+        $errores = $this->checkEjercicio5($_POST);
+        $inputTexto = $_POST['texto'] ?? '';
+        $texto = filter_var($inputTexto, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+        if ($errores === []) {
+            $textominuscula = mb_strtolower($texto);
+            $textominuscula = preg_replace('/[,.]/', '', $textominuscula);
+
+            $palabras = explode(' ', $textominuscula);
+            $resultado = array_count_values($palabras);
+            arsort($resultado);
+
+            $this->ejercicio5iterativas($texto, [], $resultado);
+        } else {
+            $this->ejercicio5iterativas($texto, $errores);
+        }
+    }
+
+    private function checkEjercicio5(array $data): array
+    {
+        $errores = [];
+        if (empty($data['texto'])) {
+            $errores['texto'] = 'Campo obligatorio';
+        }
+        return $errores;
+    }
+
+//    // EJERCICIO 8
+//    public function ejercicio8iterativas(string $numero = '', array $errores = [], array $resultado = []): void
+//    {
+//        $data = array(
+//            'titulo' => 'Ejercicios iterativas',
+//            'breadcrumb' => ['Inicio', 'Numeros primos'],
+//        );
+//        $data['errores'] = $errores;
+//        $data['numero'] = $numero;
+//        $data['resultado'] = $resultado;
+//        $this->view->showViews(array('templates/header.view.php', 'ejercicio8-iterativas.view.php', 'templates/footer.view.php'), $data);
+//    }
+//
+//    public function doEjercicio8iterativas(): void
+//    {
+//
+//        $errores = $this->checkEjercicio8($_POST);
+//        $inputNumero = $_POST['numero'] ?? '';
+//        $numero = filter_var($inputNumero, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+//
+//        if ($errores === []) {
+//            $arrNumeros = array_fill(1, $numero, true);
+//            $arrNumeros[1] = false;
+//
+//            for ($i = 2; $i * $i <= $numero; $i++) {
+//                if ($arrNumeros[$i] === true) {
+//                    for ($j = $i * $i; $j < $numero; $j += $i) {
+//                        $arrNumeros[$j] = false;
+//                    }
+//                }
+//            }
+//
+//            $resultado = $arrNumeros;
+//
+//
+//
+//            $this->ejercicio8iterativas($numero, [], $resultado);
+//        } else {
+//            $this->ejercicio8iterativas($numero, $errores);
+//        }
+//    }
+//
+//    private function checkEjercicio8(array $data): array
+//    {
+//        $errores = [];
+//        if (empty($data['numero']) || !is_numeric($data['numero'])) {
+//            $errores['numero'] = 'Introduce un número';
+//        } elseif ($data['numero'] < 2) {
+//            $errores['menor'] = 'no hay números primos menores a 2';
+//        }
+//        return $errores;
+//    }
 }
