@@ -234,23 +234,23 @@ class FrontController
             'get'
         );
 
-//        Route::add(
-//            '/ejercicio6-iterativas',
-//            function () {
-//                $controlador = new \Com\Daw2\Controllers\IterativasController();
-//                $controlador->doEjercicio6iterativas();
-//            },
-//            'post'
-//        );
-//
-//        Route::add(
-//            '/ejercicio6-iterativas',
-//            function () {
-//                $controlador = new \Com\Daw2\Controllers\IterativasController();
-//                $controlador->ejercicio6iterativas();
-//            },
-//            'get'
-//        );
+        Route::add(
+            '/ejercicio8-iterativas',
+            function () {
+                $controlador = new \Com\Daw2\Controllers\IterativasController();
+                $controlador->doEjercicio8iterativas();
+            },
+            'post'
+        );
+
+        Route::add(
+            '/ejercicio8-iterativas',
+            function () {
+                $controlador = new \Com\Daw2\Controllers\IterativasController();
+                $controlador->ejercicio8iterativas();
+            },
+            'get'
+        );
 
         Route::add(
             '/demo-proveedores',
