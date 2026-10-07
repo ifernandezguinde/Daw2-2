@@ -253,6 +253,24 @@ class FrontController
         );
 
         Route::add(
+            '/ejercicioPedidos',
+            function () {
+                $controlador = new \Com\Daw2\Controllers\PedidosController();
+                $controlador->doEjercicioPedidos();
+            },
+            'post'
+        );
+
+        Route::add(
+            '/ejercicioPedidos',
+            function () {
+                $controlador = new \Com\Daw2\Controllers\PedidosController();
+                $controlador->index();
+            },
+            'get'
+        );
+
+        Route::add(
             '/demo-proveedores',
             function () {
                 $controlador = new \Com\Daw2\Controllers\InicioController();

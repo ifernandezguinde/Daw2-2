@@ -48,27 +48,29 @@ declare(strict_types=1);
             </table>
         </div>
 
-        <div class="row">
-            <div class="col-lg-4 col-md-12 alert alert-success">
-                <h3>Aprobados: </h3>
-                <p> <?php foreach($evaluaciones['aprobados'] as $alumnos) {
-                    echo "<br>" . $alumnos;
-                    }?> </p>
-            </div>
+        <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-4 col-md-12 alert alert-success">
+                        <h3>Aprobados: </h3>
+                        <p> <?php foreach($evaluaciones['aprobados'] as $alumnos) {
+                            echo "<br>" . $alumnos;
+                            }?> </p>
+                    </div>
 
-            <div class="col-lg-4 col-md-12 alert alert-warning">
-                <h3>Suspensos: </h3>
-                <p> <?php foreach($evaluaciones['suspensos'] as $alumnos) {
-                        echo "<br>" . $alumnos;
-                    }?> </p>
-            </div>
+                    <div class="col-lg-4 col-md-12 alert alert-warning">
+                        <h3>Suspensos: </h3>
+                        <p> <?php foreach($evaluaciones['suspensos'] as $alumnos) {
+                                echo "<br>" . $alumnos;
+                            }?> </p>
+                    </div>
 
-            <div class="col-lg-4 col-md-12 alert alert-danger">
-                <h3>Repiten: </h3>
-                <p> <?php foreach($evaluaciones['repiten'] as $alumnos) {
-                        echo "<br>" . $alumnos;
-                    }?> </p>
-            </div>
+                    <div class="col-lg-4 col-md-12 alert alert-danger">
+                        <h3>Repiten: </h3>
+                        <p> <?php foreach($evaluaciones['repiten'] as $alumnos) {
+                                echo "<br>" . $alumnos;
+                            }?> </p>
+                    </div>
+                </div>
         </div>
 
         <?php
