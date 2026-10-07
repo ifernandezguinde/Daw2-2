@@ -54,7 +54,7 @@ declare(strict_types=1);
                 </div>
                 <div class="card-footer">
                     <div class="col-12 text-right">
-                        <input type="submit" value="Hacer cálculos" name="enviar" class="btn btn-primary ml-2"/>
+                        <input type="submit" value="Enviar Datos" name="enviar" class="btn btn-primary ml-2"/>
                     </div>
                 </div>
             </form>

@@ -35,7 +35,6 @@ class PedidosController extends BaseController
         } else {
             $this->index(filter_var($json, FILTER_SANITIZE_FULL_SPECIAL_CHARS), $errores);
         }
-        }
     }
 
     private function checkErrores(string $jsonPedidos, string $jsonClientes): array
