@@ -195,6 +195,25 @@
 
             </li>
 
+            <li class="nav-item menu-open">
+                <a href="#" class="nav-link">
+                    <i class="fas fa-biohazard"></i>
+                    <p>
+                        TRABAJADORES
+                        <i class="right fas fa-angle-left"></i>
+                    </p>
+                </a>
+                <ul class="nav nav-treeview">
+                    <li class="nav-item">
+                        <a href="trabajadores" class="nav-link">
+                            <i class="fas fa-biohazard"></i>
+                            <p>Listar trabajadores</p>
+                        </a>
+                    </li>
+                </ul>
+
+            </li>
+
         </ul>
       </nav>
       <!-- /.sidebar-menu -->

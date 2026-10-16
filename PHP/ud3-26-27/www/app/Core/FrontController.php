@@ -252,23 +252,61 @@ class FrontController
             'get'
         );
 
-        Route::add(
-            '/ejercicioPedidos',
-            function () {
-                $controlador = new \Com\Daw2\Controllers\PedidosController();
-                $controlador->doEjercicioPedidos();
-            },
-            'post'
-        );
 
         Route::add(
-            '/ejercicioPedidos',
+            '/trabajadores',
             function () {
-                $controlador = new \Com\Daw2\Controllers\PedidosController();
-                $controlador->index();
+                $controlador = new \Com\Daw2\Controllers\TrabajadorController();
+                $controlador->listarTrabajadores();
             },
             'get'
         );
+
+        Route::add(
+            '/trabajadores-salario',
+            function () {
+                $controlador = new \Com\Daw2\Controllers\TrabajadorController();
+                $controlador->ordenSalario();
+            },
+            'get'
+        );
+
+        Route::add(
+            '/trabajadoresStandard',
+            function () {
+                $controlador = new \Com\Daw2\Controllers\TrabajadorController();
+                $controlador->trabajadoresStandard();
+            },
+            'get'
+        );
+
+        Route::add(
+            '/trabajadoresCarlos',
+            function () {
+                $controlador = new \Com\Daw2\Controllers\TrabajadorController();
+                $controlador->trabajadoresCarlos();
+            },
+            'get'
+        );
+
+
+//        Route::add(
+//            '/ejercicioPedidos',
+//            function () {
+//                $controlador = new \Com\Daw2\Controllers\PedidosController();
+//                $controlador->doEjercicioPedidos();
+//            },
+//            'post'
+//        );
+//
+//        Route::add(
+//            '/ejercicioPedidos',
+//            function () {
+//                $controlador = new \Com\Daw2\Controllers\PedidosController();
+//                $controlador->index();
+//            },
+//            'get'
+//        );
 
         Route::add(
             '/demo-proveedores',
