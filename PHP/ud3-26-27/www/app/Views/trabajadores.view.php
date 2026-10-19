@@ -1,3 +1,47 @@
+<form method="get" action="/trabajadores">
+    <div
+            class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+        <h6 class="m-0 font-weight-bold text-primary">Filtros</h6>
+    </div>
+
+    <!-- Card Body -->
+    <div class="card-body">
+
+        <!--<form action="./?sec=formulario" method="get">                   -->
+        <div class="row">
+
+            <!-- filtro nombre de usuario -->
+            <div class="col-12 col-lg-4">
+                <div class="mb-3">
+                    <label for="alias">Nombre de Trabajador:</label>
+                    <input type="text" class="form-control" name="nombre" id="nombre" value="" />
+                </div>
+            </div>
+
+            <!-- filtro tipo de usuario -->
+            <div class="col-12 col-lg-4">
+                <div class="mb-3">
+                    <label for="id_continente">Tipo de Trabajador:</label>
+                    <select name="username" id="username" class="form-control" data-placeholder="-">
+                        <option value="">-</option>
+                        <?php foreach ($trabajadores as $trabajador) { ?>
+                            <option><?php echo $trabajador['nombre_rol'] ?></option>
+                        <?php }?>
+                    </select>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="card-footer">
+        <div class="col-12 text-right">
+            <a href="/trabajadores" value="" name="reiniciar" class="btn btn-danger">Reiniciar filtros</a>
+            <input type="submit" value="Aplicar filtros" name="enviar" class="btn btn-primary ml-2"/>
+        </div>
+    </div>
+</form>
+
 <!--Inicio HTML -->
 <div class="row">
     <div class="col-12">

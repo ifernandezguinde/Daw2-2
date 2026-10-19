@@ -263,7 +263,7 @@ class FrontController
         );
 
         Route::add(
-            '/trabajadores-salario',
+            '/trabajadoresSalario',
             function () {
                 $controlador = new \Com\Daw2\Controllers\TrabajadorController();
                 $controlador->ordenSalario();
@@ -285,6 +285,15 @@ class FrontController
             function () {
                 $controlador = new \Com\Daw2\Controllers\TrabajadorController();
                 $controlador->trabajadoresCarlos();
+            },
+            'get'
+        );
+
+        Route::add(
+            '/filtrarTrabajadoresNombre',
+            function () {
+                $controlador = new \Com\Daw2\Controllers\TrabajadorController();
+                $controlador->trabajadorNombre();
             },
             'get'
         );

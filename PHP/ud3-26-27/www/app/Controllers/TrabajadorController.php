@@ -55,5 +55,22 @@ class TrabajadorController extends BaseController
         $this->view->showViews(array('templates/header.view.php', 'trabajadores.view.php', 'templates/footer.view.php'), $data);
     }
 
+    public function trabajadorNombre()
+    {
+        $model = new TrabajadorModel();
+        if(!empty($_GET)){
+            $trabajadores = $model->trabajadorNombre($_GET);
+        } else {
+            $trabajadores = $model->getTrabajadores();
+        }
+
+        $data = array(
+            'titulo' => 'Listar trabajadores por nombre seleccionado',
+            'breadcrumb' => ['Inicio', 'Listar trabajadores por nombre seleccionado'],
+            'trabajadores' => $trabajadores
+        );
+        $this->view->showViews(array('templates/header.view.php', 'trabajadores.view.php', 'templates/footer.view.php'), $data);
+    }
+
 
 }

@@ -28,7 +28,7 @@
               </li>              
             </ul>
           </li>
-            <li class="nav-item menu-open">
+            <li class="nav-item menu-close">
                 <a href="#" class="nav-link">
                     <i class="fas fa-biohazard"></i>
                     <p>
@@ -64,7 +64,7 @@
                 </ul>
             </li>
 
-            <li class="nav-item menu-open">
+            <li class="nav-item menu-close">
                 <a href="#" class="nav-link">
                     <i class="fas fa-biohazard"></i>
                     <p>
@@ -118,7 +118,7 @@
                 </ul>
             </li>
 
-            <li class="nav-item menu-open">
+            <li class="nav-item menu-close">
                 <a href="#" class="nav-link">
                     <i class="fas fa-biohazard"></i>
                     <p>
@@ -176,7 +176,7 @@
                 </ul>
             </li>
 
-            <li class="nav-item menu-open">
+            <li class="nav-item menu-close">
                 <a href="#" class="nav-link">
                     <i class="fas fa-biohazard"></i>
                     <p>
@@ -208,6 +208,38 @@
                         <a href="trabajadores" class="nav-link">
                             <i class="fas fa-biohazard"></i>
                             <p>Listar trabajadores</p>
+                        </a>
+                    </li>
+                </ul>
+                <ul class="nav nav-treeview">
+                    <li class="nav-item">
+                        <a href="trabajadoresSalario" class="nav-link">
+                            <i class="fas fa-biohazard"></i>
+                            <p>Listar trabajadores por salario</p>
+                        </a>
+                    </li>
+                </ul>
+                <ul class="nav nav-treeview">
+                    <li class="nav-item">
+                        <a href="trabajadoresStandard" class="nav-link">
+                            <i class="fas fa-biohazard"></i>
+                            <p>Listar trabajadores standard</p>
+                        </a>
+                    </li>
+                </ul>
+                <ul class="nav nav-treeview">
+                    <li class="nav-item">
+                        <a href="trabajadoresCarlos" class="nav-link">
+                            <i class="fas fa-biohazard"></i>
+                            <p>Listar trabajadores Carlos</p>
+                        </a>
+                    </li>
+                </ul>
+                <ul class="nav nav-treeview">
+                    <li class="nav-item">
+                        <a href="filtrarTrabajadoresNombre" class="nav-link">
+                            <i class="fas fa-biohazard"></i>
+                            <p>Filtrar por nombre</p>
                         </a>
                     </li>
                 </ul>

@@ -36,4 +36,16 @@ class TrabajadorModel extends BaseDbModel
                                             LEFT JOIN ud5.aux_countries t on t.id = trabajadores.id_country
                                             WHERE username LIKE 'Carlos%' ")->fetchAll();
     }
+
+    public function trabajadorNombre($filters): array
+    {
+
+        $sql = "SELECT * FROM trabajadores 
+                    LEFT JOIN ud5.aux_rol_trabajador art on art.id_rol = trabajadores.id_rol
+                    LEFT JOIN ud5.aux_countries t on t.id = trabajadores.id_country
+                    WHERE username LIKE :nombre ";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute(['nombre' => "%" . $filters['nombre'] . "%"]);
+        return $stmt->fetchAll();
+    }
 }
