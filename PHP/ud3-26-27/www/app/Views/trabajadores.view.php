@@ -1,4 +1,4 @@
-<form method="get" action="/trabajadores">
+<form method="get" action="">
     <div
             class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
         <h6 class="m-0 font-weight-bold text-primary">Filtros</h6>
@@ -14,7 +14,7 @@
             <div class="col-12 col-lg-4">
                 <div class="mb-3">
                     <label for="alias">Nombre de Trabajador:</label>
-                    <input type="text" class="form-control" name="nombre" id="nombre" value="" />
+                    <input type="text" class="form-control" name="nombre" id="nombre" value="<?php echo $_GET['nombre'] ?? '' ?>" />
                 </div>
             </div>
 
@@ -22,10 +22,10 @@
             <div class="col-12 col-lg-4">
                 <div class="mb-3">
                     <label for="id_continente">Tipo de Trabajador:</label>
-                    <select name="username" id="username" class="form-control" data-placeholder="-">
-                        <option value="">-</option>
-                        <?php foreach ($trabajadores as $trabajador) { ?>
-                            <option><?php echo $trabajador['nombre_rol'] ?></option>
+                    <select name="rol" id="rol" class="form-control" s="<?php echo $_GET['rol'] ?? '' ?>">
+                        <option> </option>
+                        <?php foreach ($roles as $rol) { ?>
+                            <option><?php echo $rol['nombre_rol'] ?></option>
                         <?php }?>
                     </select>
                 </div>
@@ -57,12 +57,12 @@
                 <table id="tabladatos" class="table table-striped">
                     <thead>
                     <tr>
-                        <th><a href="/proveedores?order=1">username</a></th>
-                        <th><a href="/proveedores?order=2">salarioBruto</a> </th>
-                        <th><a href="/proveedores?order=3">retenciónIRPF</a> </th>
-                        <th><a href="/proveedores?order=4">activo</a> </th>
-                        <th><a href="/proveedores?order=5">id_rol</a> </th>
-                        <th><a href="/proveedores?order=6">id_country</a> </th>
+                        <th><a href="">username</a></th>
+                        <th><a href="">salarioBruto</a> </th>
+                        <th><a href="">retenciónIRPF</a> </th>
+                        <th><a href="">activo</a> </th>
+                        <th><a href="">rol</a> </th>
+                        <th><a href="">país</a> </th>
                     </tr>
                     </thead>
                     <tbody>

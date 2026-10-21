@@ -48,4 +48,16 @@ class TrabajadorModel extends BaseDbModel
         $stmt->execute(['nombre' => "%" . $filters['nombre'] . "%"]);
         return $stmt->fetchAll();
     }
+
+    public function trabajadorRol($filters): array
+    {
+
+        $sql = "SELECT * FROM trabajadores 
+                    LEFT JOIN ud5.aux_rol_trabajador art on art.id_rol = trabajadores.id_rol
+                    LEFT JOIN ud5.aux_countries t on t.id = trabajadores.id_country
+                    WHERE nombre_rol LIKE :rol ";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute(['rol' => $filters['rol']]);
+        return $stmt->fetchAll();
+    }
 }

@@ -3,6 +3,7 @@ declare(strict_types=1);
 namespace Com\Daw2\Controllers;
 
 use Com\Daw2\Core\BaseController;
+use Com\Daw2\Models\AuxRolModel;
 use Com\Daw2\Models\TrabajadorModel;
 
 class TrabajadorController extends BaseController
@@ -57,18 +58,27 @@ class TrabajadorController extends BaseController
 
     public function trabajadorNombre()
     {
-        $model = new TrabajadorModel();
-        if(!empty($_GET)){
-            $trabajadores = $model->trabajadorNombre($_GET);
-        } else {
-            $trabajadores = $model->getTrabajadores();
+        $input = filter_var_array($_GET, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        $rolModel = new AuxRolModel();
+        $roles = $rolModel->listaTrabajadores();
+
+        $trabajadoresModel = new TrabajadorModel();
+        if(empty($_GET['nombre']) && empty($_GET['rol'])){
+            $trabajadores = $trabajadoresModel->getTrabajadores();
+        } elseif (isset($_GET['nombre']) && !empty($_GET['nombre'])) {
+            $trabajadores = $trabajadoresModel->trabajadorNombre($input);
+        } elseif (isset($_GET['rol'])){
+            $trabajadores = $trabajadoresModel->trabajadorRol($input);
         }
 
         $data = array(
             'titulo' => 'Listar trabajadores por nombre seleccionado',
             'breadcrumb' => ['Inicio', 'Listar trabajadores por nombre seleccionado'],
-            'trabajadores' => $trabajadores
+            'trabajadores' => $trabajadores,
+            'roles' => $roles
         );
+
+
         $this->view->showViews(array('templates/header.view.php', 'trabajadores.view.php', 'templates/footer.view.php'), $data);
     }
 

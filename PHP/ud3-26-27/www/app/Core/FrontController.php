@@ -290,13 +290,15 @@ class FrontController
         );
 
         Route::add(
-            '/filtrarTrabajadoresNombre',
+            '/trabajadorNombre',
             function () {
                 $controlador = new \Com\Daw2\Controllers\TrabajadorController();
                 $controlador->trabajadorNombre();
             },
             'get'
         );
+
+
 
 
 //        Route::add(

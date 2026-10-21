@@ -237,7 +237,7 @@
                 </ul>
                 <ul class="nav nav-treeview">
                     <li class="nav-item">
-                        <a href="filtrarTrabajadoresNombre" class="nav-link">
+                        <a href="trabajadorNombre" class="nav-link">
                             <i class="fas fa-biohazard"></i>
                             <p>Filtrar por nombre</p>
                         </a>
