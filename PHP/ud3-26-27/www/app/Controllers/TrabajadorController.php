@@ -63,11 +63,11 @@ class TrabajadorController extends BaseController
         $roles = $rolModel->listaTrabajadores();
 
         $trabajadoresModel = new TrabajadorModel();
-        if(empty($_GET['nombre']) && empty($_GET['rol'])){
+        if(empty($_GET['nombre']) && empty($_GET['id_rol'])){
             $trabajadores = $trabajadoresModel->getTrabajadores();
         } elseif (isset($_GET['nombre']) && !empty($_GET['nombre'])) {
             $trabajadores = $trabajadoresModel->trabajadorNombre($input);
-        } elseif (isset($_GET['rol'])){
+        } elseif (isset($_GET['id_rol'])){
             $trabajadores = $trabajadoresModel->trabajadorRol($input);
         }
 

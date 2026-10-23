@@ -239,10 +239,11 @@
                     <li class="nav-item">
                         <a href="trabajadorNombre" class="nav-link">
                             <i class="fas fa-biohazard"></i>
-                            <p>Filtrar por nombre</p>
+                            <p>Filtros</p>
                         </a>
                     </li>
                 </ul>
+
 
             </li>
 

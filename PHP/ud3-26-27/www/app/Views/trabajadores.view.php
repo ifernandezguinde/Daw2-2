@@ -21,8 +21,8 @@
             <!-- filtro tipo de usuario -->
             <div class="col-12 col-lg-4">
                 <div class="mb-3">
-                    <label for="id_continente">Tipo de Trabajador:</label>
-                    <select name="rol" id="rol" class="form-control" s="<?php echo $_GET['rol'] ?? '' ?>">
+                    <label for="id_rol">Tipo de Trabajador:</label>
+                        <select name="id_rol" id="id_rol" class="form-control select2" value="<?php echo $_GET['rol'] ?? '' ?>">
                         <option> </option>
                         <?php foreach ($roles as $rol) { ?>
                             <option><?php echo $rol['nombre_rol'] ?></option>
