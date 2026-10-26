@@ -5,28 +5,28 @@ declare(strict_types=1);
 <div class="row">
     <?php
     if (isset($resultado) && $resultado !== []):
-        ?>
-        <div class="col-12 alert alert-success">
-            <table class="table table-bordered">
+    ?>
+    <div class="col-12 alert alert-success">
+        <table class="table table-bordered">
+            <?php
+            foreach ($resultado as $row):
+            ?>
+            <tr>
                 <?php
-                foreach ($resultado as $row):
-                    ?>
-                    <tr>
-                        <?php
-                        foreach ($row as $column):
-                            ?>
-                            <td><?= $column ?></td>
-                        <?php endforeach; ?>
-                    </tr>
+                foreach ($row as $column):
+                ?>
+                <td><?= $column ?></td>
                 <?php endforeach; ?>
-            </table>
-        </div>
+            </tr>
+            <?php endforeach; ?>
+        </table>
+    </div>
     <?php endif; ?>
     <div class="col-12">
         <div class="card shadow mb-4">
             <form method="post" action="">
                 <div
-                        class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                     <h6 class="m-0 font-weight-bold text-primary">Ordenación matriz de mayor a menor</h6>
                 </div>
                 <!-- Card Body -->

@@ -38,7 +38,6 @@ class FrontController
             },
             'get'
         );
-
         Route::add(
             '/ejercicio2-operadores',
             function () {
@@ -70,260 +69,164 @@ class FrontController
         );
 
         Route::add(
-            '/ejercicio1-estructuras',
+            '/ejercicio5-operadores',
             function () {
-                $controlador = new \Com\Daw2\Controllers\EjerciciosDecisionController();
-                $controlador->ejercicio1estructuras();
+                $controlador = new \Com\Daw2\Controllers\EjerciciosController();
+                $controlador->ejercicio5operadores();
+
+            },
+            'get'
+        );
+        Route::add(
+            '/ejercicio6-operadores',
+            function () {
+                $controlador = new \Com\Daw2\Controllers\EjerciciosController();
+                $controlador->ejercicio6operadores();
+
+            },
+            'get'
+        );
+        Route::add(
+            '/ejercicio7-operadores',
+            function () {
+                $controlador = new \Com\Daw2\Controllers\EjerciciosController();
+                $controlador->ejercicio7operadores();
 
             },
             'get'
         );
 
         Route::add(
-            '/ejercicio2-estructuras',
+            '/ejercicio8-operadores',
             function () {
-                $controlador = new \Com\Daw2\Controllers\EjerciciosDecisionController();
-                $controlador->ejercicio2estructuras();
+                $controlador = new \Com\Daw2\Controllers\EjerciciosController();
+                $controlador->ejercicio8operadores();
 
             },
             'get'
         );
 
         Route::add(
-            '/ejercicio3-estructuras',
+            '/ejercicio9-operadores',
             function () {
-                $controlador = new \Com\Daw2\Controllers\EjerciciosDecisionController();
-                $controlador->ejercicio3estructuras();
+                $controlador = new \Com\Daw2\Controllers\EjerciciosController();
+                $controlador->ejercicio9operadores();
 
             },
             'get'
         );
 
         Route::add(
-            '/ejercicio4-estructuras',
+            '/ejercicio5-decision',
             function () {
                 $controlador = new \Com\Daw2\Controllers\EjerciciosDecisionController();
-                $controlador->ejercicio4estructuras();
+                $controlador->ejercicio5Decision();
 
             },
             'get'
         );
 
         Route::add(
-            '/ejercicio5-estructuras',
-            function () {
-                $controlador = new \Com\Daw2\Controllers\EjerciciosDecisionController();
-                $controlador->ejercicio5estructuras();
-
-            },
-            'get'
-        );
-
-        Route::add(
-            '/ejercicio6-estructuras',
-            function () {
-                $controlador = new \Com\Daw2\Controllers\EjerciciosDecisionController();
-                $controlador->ejercicio6estructuras();
-
-            },
-            'get'
-        );
-
-        Route::add(
-            '/ejercicio7-estructuras',
-            function () {
-                $controlador = new \Com\Daw2\Controllers\EjerciciosDecisionController();
-                $controlador->ejercicio7estructuras();
-
-            },
-            'get'
-        );
-
-        Route::add(
-            '/ejercicio1-iterativas',
+            '/iterativas1',
             function () {
                 $controlador = new \Com\Daw2\Controllers\IterativasController();
-                $controlador->ejercicio1iterativas();
+                $controlador->ejercicio1();
 
             },
             'get'
         );
 
         Route::add(
-            '/ejercicio1-iterativas',
+            '/iterativas1',
             function () {
                 $controlador = new \Com\Daw2\Controllers\IterativasController();
-                $controlador->doEjercicio1iterativas();
+                $controlador->doEjercicio1();
             },
             'post'
         );
-
         Route::add(
-            '/ejercicio2-iterativas',
+            '/iterativas2',
             function () {
                 $controlador = new \Com\Daw2\Controllers\IterativasController();
-                $controlador->ejercicio2iterativas();
+                $controlador->ejercicio2();
 
             },
             'get'
         );
 
         Route::add(
-            '/ejercicio2-iterativas',
+            '/iterativas2',
             function () {
                 $controlador = new \Com\Daw2\Controllers\IterativasController();
-                $controlador->doEjercicio2iterativas();
+                $controlador->doEjercicio2();
             },
             'post'
         );
-
         Route::add(
-            '/ejercicio3-iterativas',
+            '/iterativas8',
             function () {
                 $controlador = new \Com\Daw2\Controllers\IterativasController();
-                $controlador->ejercicio3iterativas();
+                $controlador->ejercicio8();
 
             },
             'get'
         );
 
         Route::add(
-            '/ejercicio3-iterativas',
+            '/iterativas8',
             function () {
                 $controlador = new \Com\Daw2\Controllers\IterativasController();
-                $controlador->doEjercicio3iterativas();
+                $controlador->doEjercicio8();
             },
             'post'
         );
-
         Route::add(
-            '/ejercicio4-iterativas',
+            '/iterativas9',
             function () {
                 $controlador = new \Com\Daw2\Controllers\IterativasController();
-                $controlador->ejercicio4iterativas();
+                $controlador->ejercicio9();
 
             },
             'get'
         );
 
         Route::add(
-            '/ejercicio4-iterativas',
+            '/iterativas9',
             function () {
                 $controlador = new \Com\Daw2\Controllers\IterativasController();
-                $controlador->doEjercicio4iterativas();
+                $controlador->doEjercicio9();
             },
             'post'
         );
-
-        Route::add(
-            '/ejercicio5-iterativas',
-            function () {
-                $controlador = new \Com\Daw2\Controllers\IterativasController();
-                $controlador->doEjercicio5iterativas();
-            },
-            'post'
-        );
-
-        Route::add(
-            '/ejercicio5-iterativas',
-            function () {
-                $controlador = new \Com\Daw2\Controllers\IterativasController();
-                $controlador->ejercicio5iterativas();
-
-            },
-            'get'
-        );
-
-        Route::add(
-            '/ejercicio8-iterativas',
-            function () {
-                $controlador = new \Com\Daw2\Controllers\IterativasController();
-                $controlador->doEjercicio8iterativas();
-            },
-            'post'
-        );
-
-        Route::add(
-            '/ejercicio8-iterativas',
-            function () {
-                $controlador = new \Com\Daw2\Controllers\IterativasController();
-                $controlador->ejercicio8iterativas();
-            },
-            'get'
-        );
-
-
-        Route::add(
-            '/trabajadores',
-            function () {
-                $controlador = new \Com\Daw2\Controllers\TrabajadorController();
-                $controlador->listarTrabajadores();
-            },
-            'get'
-        );
-
-        Route::add(
-            '/trabajadoresSalario',
-            function () {
-                $controlador = new \Com\Daw2\Controllers\TrabajadorController();
-                $controlador->ordenSalario();
-            },
-            'get'
-        );
-
-        Route::add(
-            '/trabajadoresStandard',
-            function () {
-                $controlador = new \Com\Daw2\Controllers\TrabajadorController();
-                $controlador->trabajadoresStandard();
-            },
-            'get'
-        );
-
-        Route::add(
-            '/trabajadoresCarlos',
-            function () {
-                $controlador = new \Com\Daw2\Controllers\TrabajadorController();
-                $controlador->trabajadoresCarlos();
-            },
-            'get'
-        );
-
-        Route::add(
-            '/trabajadorNombre',
-            function () {
-                $controlador = new \Com\Daw2\Controllers\TrabajadorController();
-                $controlador->trabajadorNombre();
-            },
-            'get'
-        );
-
-
-
-
-//        Route::add(
-//            '/ejercicioPedidos',
-//            function () {
-//                $controlador = new \Com\Daw2\Controllers\PedidosController();
-//                $controlador->doEjercicioPedidos();
-//            },
-//            'post'
-//        );
-//
-//        Route::add(
-//            '/ejercicioPedidos',
-//            function () {
-//                $controlador = new \Com\Daw2\Controllers\PedidosController();
-//                $controlador->index();
-//            },
-//            'get'
-//        );
-
         Route::add(
             '/demo-proveedores',
             function () {
                 $controlador = new \Com\Daw2\Controllers\InicioController();
                 $controlador->demo();
+            },
+            'get'
+        );
+        Route::add(
+            '/todos-trabajadores',
+            function () {
+                $controlador = new \Com\Daw2\Controllers\TrabajadorController();
+                $controlador->getAllTrabajadores();
+            },
+            'get'
+        );
+        Route::add(
+            '/todos-trabajadores-ordenados',
+            function () {
+                $controlador = new \Com\Daw2\Controllers\TrabajadorController();
+                $controlador->getAllTrabajadoresOrdenadosSalario();
+            },
+            'get'
+        );
+        Route::add(
+            '/trabajadores',
+            function () {
+                $controlador = new \Com\Daw2\Controllers\TrabajadorController();
+                $controlador->getTrabajadores();
             },
             'get'
         );

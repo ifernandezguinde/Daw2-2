@@ -9,9 +9,8 @@ class EjerciciosController extends \Com\Daw2\Core\BaseController
     public function ejercicio1strings(): void
     {
         $data = array(
-            'titulo' => 'Ejercicio Strings',
-            'breadcrumb' => ['Inicio', 'Ejercicio Strings'],
-            //'variableNueva' => 'Tengo valor'
+            'titulo' => 'Ejercicios Strings',
+            'breadcrumb' => ['Inicio', 'Ejercicios Operadores'],
         );
         $s = 'Carmiña';
         $final = '_user';
@@ -32,81 +31,162 @@ class EjerciciosController extends \Com\Daw2\Core\BaseController
 
     public function ejercicio1operadores(): void
     {
-        $x = 10;
-        $y = $x**2;
         $data = array(
-            'titulo' => 'Ejercicio1 operadores',
-            'breadcrumb' => ['Inicio', 'Ejercicio1-operadores'],
-            'x' => $x,
-            'cuadrado' => $y
-            //'variableNueva' => 'Tengo valor'
+            'titulo' => 'Ejercicios Operadores',
+            'breadcrumb' => ['Inicio', 'Ejercicio 1 operadores'],
         );
-
-        $this->view->showViews(array('templates/header.view.php', 'ejercicio1-operadores.view.php', 'templates/footer.view.php'), $data);
-
+        $x = 10;
+        $cuadrado = $x**2;
+        $data['x'] = $x;
+        $data['cuadrado'] = $cuadrado;
+        $this->view->showViews(array('templates/header.view.php', 'ejercicios1-operadores.view.php', 'templates/footer.view.php'), $data);
     }
 
     public function ejercicio2operadores(): void
     {
-        $x = 10;
-        $y = 160;
-        $z = $x*$y;
         $data = array(
-            'titulo' => 'Ejercicio2 operadores',
-            'breadcrumb' => ['Inicio', 'Ejercicio2-operadores'],
-            'precio' => $x,
-            'horas' => $y,
-            'sueldo' => $z
+            'titulo' => 'Ejercicios Operadores',
+            'breadcrumb' => ['Inicio', 'Ejercicio 2 operadores'],
         );
+        $precioHora = 23.3;
+        $numHorasTrabajadas = 160;
+        $salarioBruto = $precioHora * $numHorasTrabajadas;
 
-        $this->view->showViews(array('templates/header.view.php', 'ejercicio2-operadores.view.php', 'templates/footer.view.php'), $data);
+        $data['salarioBruto'] = $salarioBruto;
+        $data['horasTrabajadas'] = $numHorasTrabajadas;
+        $data['precioHora'] = $precioHora;
 
+        $this->view->showViews(array('templates/header.view.php', 'ejercicios2-operadores.view.php', 'templates/footer.view.php'), $data);
     }
 
     public function ejercicio3operadores(): void
     {
-        $base = 40;
+        $data = array(
+            'titulo' => 'Ejercicios Operadores',
+            'breadcrumb' => ['Inicio', 'Ejercicio 3 operadores'],
+        );
+        $base = 15;
         $altura = 10;
         $area = $base * $altura;
-        $perimetro = ($base + $altura) * 2;
-        $data = array(
-            'titulo' => 'Ejercicio3 operadores',
-            'breadcrumb' => ['Inicio', 'Ejercicio3-operadores'],
-            'base' => $base,
-            'altura' => $altura,
-            'perimetro' => $perimetro,
-            'area' => $area
+        $perimetro = 2 * $base + 2 * $altura;
 
-        );
+        $data['perimetro'] = $perimetro;
+        $data['base'] = $base;
+        $data['altura'] = $altura;
+        $data['area'] = $area;
 
-        $this->view->showViews(array('templates/header.view.php', 'ejercicio3-operadores.view.php', 'templates/footer.view.php'), $data);
-
+        $this->view->showViews(array('templates/header.view.php', 'ejercicios3-operadores.view.php', 'templates/footer.view.php'), $data);
     }
 
     public function ejercicio4operadores(): void
     {
-        $nombre = 'Juan';
-        $edad = 25;
-        $media = 8.5;
         $data = array(
-            'titulo' => 'Ejercicio operadores',
-            'breadcrumb' => ['Inicio', 'Ejercicio4-operadores'],
-            'nombre' => $nombre,
-            'edad' => $edad,
-            'media' => $media
+            'titulo' => 'Ejercicios Operadores',
+            'breadcrumb' => ['Inicio', 'Ejercicio 4 operadores'],
+        );
+        $nombre = 'Pepe';
+        $edad = 32;
+        $notaMedia = 8.3;
+
+        $data['nombre'] = $nombre;
+        $data['edad'] = $edad;
+        $data['notaMedia'] = $notaMedia;
+
+        $this->view->showViews(array('templates/header.view.php', 'ejercicios4-operadores.view.php', 'templates/footer.view.php'), $data);
+    }
+
+    public function ejercicio5operadores()
+    {
+        $data = array(
+            'titulo' => 'Ejercicios Operadores',
+            'breadcrumb' => ['Inicio', 'Ejercicio 5 operadores'],
+        );
+        $precioNocheBaja = 70;
+        $precioNocheAlta = 100;
+        $nochesBaja = 3;
+        $nochesAlta = 2;
+        $total = $precioNocheBaja * $nochesBaja + $precioNocheAlta * $nochesAlta;
+        $data['total'] = $total;
+        $data['nochesBaja'] = $nochesBaja;
+        $data['precioNocheBaja'] = $precioNocheBaja;
+        $data['precioNocheAlta'] = $precioNocheAlta;
+        $data['nochesAlta'] = $nochesAlta;
+
+        $this->view->showViews(array('templates/header.view.php', 'ejercicios5-operadores.view.php', 'templates/footer.view.php'), $data);
+    }
+
+    public function ejercicio6operadores()
+    {
+        $data = array(
+            'titulo' => 'Ejercicios Operadores',
+            'breadcrumb' => ['Inicio', 'Ejercicio 6 operadores'],
         );
 
-        $this->view->showViews(array('templates/header.view.php', 'ejercicio4-operadores.view.php', 'templates/footer.view.php'), $data);
+        $radio = 7;
+        $area = pi() * $radio**2;
+        $perimetro = 2 * pi() * $radio;
 
+        $data['perimetro'] = $perimetro;
+        $data['area'] = $area;
+        $data['radio'] = $radio;
+
+        $this->view->showViews(array('templates/header.view.php', 'ejercicios6-operadores.view.php', 'templates/footer.view.php'), $data);
     }
 
-    function addNumbers(int|float $a, int|float $b, int|float $c = 0, int|float|string $d = 0): int|false
+    public function ejercicio7operadores()
     {
-        return $a + $b + $c + $d;
+        $data = array(
+            'titulo' => 'Ejercicios Operadores',
+            'breadcrumb' => ['Inicio', 'Ejercicio 7 operadores'],
+        );
+
+        $kmh = 120;
+        $ms = $kmh / 3.6;
+
+        $data['kmh'] = $kmh;
+        $data['ms'] = $ms;
+
+        $this->view->showViews(array('templates/header.view.php', 'ejercicios7-operadores.view.php', 'templates/footer.view.php'), $data);
     }
 
-    function getFechaNacimiento(Persona $p) :Date {
+    public function ejercicio8operadores()
+    {
+        $data = array(
+            'titulo' => 'Ejercicios Operadores',
+            'breadcrumb' => ['Inicio', 'Ejercicio 8 operadores'],
+        );
 
+        $numeroOriginal = 9818181887;
+
+        $numero = (string)($numeroOriginal % 1000);
+        $centenas = $numero[0];
+        $decenas = $numero[1];
+        $unidades = $numero[2];
+
+        $data['centenas'] = $centenas;
+        $data['decenas'] = $decenas;
+        $data['unidades'] = $unidades;
+        $data['numero'] = $numeroOriginal;
+
+        $this->view->showViews(array('templates/header.view.php', 'ejercicios8-operadores.view.php', 'templates/footer.view.php'), $data);
+    }
+    public function ejercicio9operadores()
+    {
+        $data = array(
+            'titulo' => 'Ejercicios Operadores',
+            'breadcrumb' => ['Inicio', 'Ejercicio 9 operadores'],
+        );
+
+        $stringOriginal = "Un trabajo liderado por la Universidad Complutense de Madrid muestra que los modelos celulares 3D derivados de tejido histológicamente libre de tumor son capaces de manifestar capacidades de crecimiento, autorrenovación y migración que no son visibles mediante el análisis convencional del tejido. Los autores afirman que esta técnica podría ser un complemento diagnóstico.";
+
+        $numCaracteres = mb_strlen($stringOriginal);
+        $numPalabras = str_word_count($stringOriginal);
+
+        $data['stringOriginal'] = $stringOriginal;
+        $data['numPalabras'] = $numPalabras;
+        $data['numCaracteres'] = $numCaracteres;
+
+        $this->view->showViews(array('templates/header.view.php', 'ejercicios9-operadores.view.php', 'templates/footer.view.php'), $data);
     }
 
 }

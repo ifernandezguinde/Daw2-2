@@ -1,49 +1,89 @@
-<form method="get" action="">
-    <div
-            class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-        <h6 class="m-0 font-weight-bold text-primary">Filtros</h6>
-    </div>
-
-    <!-- Card Body -->
-    <div class="card-body">
-
-        <!--<form action="./?sec=formulario" method="get">                   -->
-        <div class="row">
-
-            <!-- filtro nombre de usuario -->
-            <div class="col-12 col-lg-4">
-                <div class="mb-3">
-                    <label for="alias">Nombre de Trabajador:</label>
-                    <input type="text" class="form-control" name="nombre" id="nombre" value="<?php echo $_GET['nombre'] ?? '' ?>" />
-                </div>
-            </div>
-
-            <!-- filtro tipo de usuario -->
-            <div class="col-12 col-lg-4">
-                <div class="mb-3">
-                    <label for="id_rol">Tipo de Trabajador:</label>
-                        <select name="id_rol" id="id_rol" class="form-control select2" value="<?php echo $_GET['rol'] ?? '' ?>">
-                        <option> </option>
-                        <?php foreach ($roles as $rol) { ?>
-                            <option><?php echo $rol['nombre_rol'] ?></option>
-                        <?php }?>
-                    </select>
-                </div>
-            </div>
-
-        </div>
-    </div>
-
-    <div class="card-footer">
-        <div class="col-12 text-right">
-            <a href="/trabajadores" value="" name="reiniciar" class="btn btn-danger">Reiniciar filtros</a>
-            <input type="submit" value="Aplicar filtros" name="enviar" class="btn btn-primary ml-2"/>
-        </div>
-    </div>
-</form>
-
 <!--Inicio HTML -->
 <div class="row">
+    <div class="col-12">
+        <div class="card shadow mb-4">
+            <form method="get" action="">
+                <input type="hidden" name="order" value="1"/>
+                <div
+                        class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">Filtros</h6>
+                </div>
+                <!-- Card Body -->
+                <div class="card-body">
+                    <!--<form action="./?sec=formulario" method="post">                   -->
+                    <div class="row">
+                        <div class="col-12 col-lg-4">
+                            <div class="mb-3">
+                                <label for="username">Username:</label>
+                                <input type="text" class="form-control" name="username" id="username" value="<?php echo $input['username'] ?? '';?>"  />
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-4">
+                            <div class="form-group">
+                                <label for="id_rol">Rol:</label>
+                                <select name="id_rol" id="id_rol" class="form-control select2">
+                                    <option value="">-</option>
+                                    <?php foreach ($roles as $rol) {
+                                        ?>
+                                        <option value="<?php echo $rol['id_rol'] ?>" <?php echo (isset($input['id_rol']) && $rol['id_rol'] == $input['id_rol']) ? 'selected' : ''; ?>><?php echo ucfirst($rol['nombre_rol']); ?></option>
+                                        <?php
+                                    }
+                                    ?>
+                                </select>
+                                <p class="text-error small"><?php echo $errors['id_rol'] ?? ''; ?></p>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-4">
+                            <div class="mb-3">
+                                <label for="min_salarioBruto">Salario Bruto:</label>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <input type="text" class="form-control" name="min_salarioBruto" id="min_salarioBruto" value="<?php echo $input['min_salarioBruto'] ?? '' ?>" placeholder="Mínimo" />
+                                    </div>
+                                    <div class="col-6">
+                                        <input type="text" class="form-control" name="max_salarioBruto" id="max_SalarioBruto" value="<?php echo $input['max_salarioBruto'] ?? ''?>" placeholder="Máximo" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-4">
+                            <div class="mb-3">
+                                <label for="min_retencionIRPF">Rentención:</label>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <input type="text" class="form-control" name="min_retencionIRPF" id="min_retencionIRPF" value="<?php echo $input['min_retencionIRPF'] ?? '' ?>" placeholder="Mínimo" />
+                                    </div>
+                                    <div class="col-6">
+                                        <input type="text" class="form-control" name="max_retencionIRPF" id="max_retencionIRPF" value="<?php echo $input['max_retencionIRPF'] ?? ''?>" placeholder="Máximo" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6">
+                            <div class="form-group">
+                                <label for="id_country">País:</label>
+                                <select name="id_country[]" id="id_country" class="form-control select2" multiple>
+                                    <?php foreach ($countries as $country) {
+                                        ?>
+                                        <option value="<?php echo $country['id_country'] ?>" <?php echo (isset($input['id_country']) && in_array($country['id_country'], $input['id_country'])) ? 'selected' : ''; ?>><?php echo ucfirst($country['country_name']); ?></option>
+                                        <?php
+                                    }
+                                    ?>
+                                </select>
+                                <p class="text-error small"><?php echo $errors['id_country'] ?? ''; ?></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="col-12 text-right">
+                        <a href="<?php echo strtok($_SERVER['REQUEST_URI'] ?? '/', '?')?>" value="" class="btn btn-danger">Reiniciar filtros</a>
+                        <input type="submit" value="Aplicar filtros" name="enviar" class="btn btn-primary ml-2"/>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
     <div class="col-12">
         <div class="card shadow mb-4">
             <div
@@ -54,64 +94,34 @@
             <div class="card-body" id="card_table">
                 <div id="button_container" class="mb-3"></div>
                 <!--<form action="./?sec=formulario" method="post">                   -->
-                <table id="tabladatos" class="table table-striped">
+                <table id="tabladatos" class="table table-striped">                    
                     <thead>
-                    <tr>
-                        <th><a href="">username</a></th>
-                        <th><a href="">salarioBruto</a> </th>
-                        <th><a href="">retenciónIRPF</a> </th>
-                        <th><a href="">activo</a> </th>
-                        <th><a href="">rol</a> </th>
-                        <th><a href="">país</a> </th>
-                    </tr>
+                        <tr>
+                            <th><a href="/trabajadores?order=<?php echo $_GET['order'] == 1 ? '-1' : '1'; ?>">Username</a> <i class="fas fa-sort-amount-<?php echo $_GET['order'] == 1 ? 'down' : ($_GET['order'] == -1 ? 'up' : ''); ?>-alt"></i> </th>
+                            <th><a href="/trabajadores?order=<?php echo $_GET['order'] == 2 ? '-2' : '2'; ?>">Salario Bruto</a> <i class="fas fa-sort-amount-<?php echo $_GET['order'] == 2 ? 'down' : ($_GET['order'] == -2 ? 'up' : ''); ?>-alt"></i> </th>
+                            <th><a href="/trabajadores?order=<?php echo $_GET['order'] == 3 ? '-3' : '3'; ?>">Retención</a> <i class="fas fa-sort-amount-<?php echo $_GET['order'] == 3 ? 'down' : ($_GET['order'] == -3 ? 'up' : ''); ?>-alt"></i> </th>
+                            <th><a href="/trabajadores?order=<?php echo $_GET['order'] == 4 ? '-4' : '4'; ?>">Rol</a> <i class="fas fa-sort-amount-<?php echo $_GET['order'] == 4 ? 'down' : ($_GET['order'] == -4 ? 'up' : ''); ?>-alt"></i> </th>
+                            <th><a href="/trabajadores?order=<?php echo $_GET['order'] == 5 ? '-5' : '5'; ?>">País</a> <i class="fas fa-sort-amount-<?php echo $_GET['order'] == 5 ? 'down' : ($_GET['order'] == -5 ? 'up' : ''); ?>-alt"></i> </th>
+                        </tr>
                     </thead>
                     <tbody>
-                    <?php foreach ($trabajadores as $trabajador) { ?>
-                    <tr class="" >
-                        <td><?php echo $trabajador['username'] ?></td>
-                        <td><?php echo $trabajador['salarioBruto'] ?></td>
-                        <td><?php echo $trabajador['retencionIRPF'] ?></td>
-                        <td><?php echo $trabajador['activo'] ?></td>
-                        <td><?php echo $trabajador['nombre_rol'] ?></td>
-                        <td><?php echo $trabajador['country_name'] ?></td>
-                    </tr>
-                    <?php }?>
-                    </tbody>
+                    <?php
+                    foreach ($trabajadores as $trabajador) {
+                    ?>
+                        <tr class="<?php echo $trabajador['activo'] ? '' : 'table-danger'; ?>">
+                            <td><?php echo $trabajador['username'] ?></td>
+                            <td><?php echo $trabajador['salarioBruto'] ?></td>
+                            <td><?php echo $trabajador['retencionIRPF'] ?>%</td>
+                            <td><?php echo $trabajador['nombre_rol'] ?></td>
+                            <td><?php echo $trabajador['country_name'] ?></td>
+                        </tr>
+                    <?php
+                    }
+                    ?>
+                    </tbody>                    
                 </table>
             </div>
-            <div class="card-footer">
-                <nav aria-label="Navegacion por paginas">
-                    <ul class="pagination justify-content-center">
-                        <li class="page-item">
-                            <a class="page-link" href="/proveedores?page=1&order=1" aria-label="First">
-                                <span aria-hidden="true">&laquo;</span>
-                                <span class="sr-only">First</span>
-                            </a>
-                        </li>
-                        <li class="page-item">
-                            <a class="page-link" href="/proveedores?page=2&order=1" aria-label="Previous">
-                                <span aria-hidden="true">&lt;</span>
-                                <span class="sr-only">Previous</span>
-                            </a>
-                        </li>
-
-                        <li class="page-item active"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item">
-                            <a class="page-link" href="/proveedores?page=4&order=1" aria-label="Next">
-                                <span aria-hidden="true">&gt;</span>
-                                <span class="sr-only">Next</span>
-                            </a>
-                        </li>
-                        <li class="page-item">
-                            <a class="page-link" href="/proveedores?page=8&order=1" aria-label="Last">
-                                <span aria-hidden="true">&raquo;</span>
-                                <span class="sr-only">Last</span>
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
         </div>
-    </div>
+    </div>                        
 </div>
 <!--Fin HTML -->

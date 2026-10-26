@@ -11,12 +11,12 @@ declare(strict_types=1);
             <table class="table table-striped">
                 <thead>
                 <tr>
-                    <th>Asignatura</th>
+                    <th>Módulo</th>
                     <th>Media</th>
-                    <th>Suspensos</th>
                     <th>Aprobados</th>
-                    <th>Nota max</th>
-                    <th>Nota min</th>
+                    <th>Suspensos</th>
+                    <th>Máximo</th>
+                    <th>Mínimo</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -27,16 +27,16 @@ declare(strict_types=1);
                         <?php
                         if ($datos['media'] === null) {
                             ?>
-                            <td><?php echo $nombreAsignatura ?></td>
+                            <td><?php echo ucfirst($nombreAsignatura) ?></td>
                             <td colspan="99"><i>Sin alumnado</i></td>
                             <?php
                         } else { ?>
-                            <td><?php echo $nombreAsignatura ?></td>
-                            <td><?php echo $datos['media'] ?></td>
-                            <td><?php echo $datos['suspensos']; ?></td>
+                            <td><?php echo ucfirst($nombreAsignatura) ?></td>
+                            <td><?php echo number_format($datos['media'], 2, ',', '.') ?></td>
                             <td><?php echo $datos['aprobados']; ?></td>
-                            <td><?php echo $datos['max']['alumno'] . ": " . $datos['max']['nota'] ?></td>
-                            <td><?php echo $datos['min']['alumno'] . ": " . $datos['min']['nota'] ?></td>
+                            <td><?php echo $datos['suspensos']; ?></td>
+                            <td><?php echo $datos['max']['alumno'] . ": " . number_format($datos['max']['nota'], 2, ',', '.') ?></td>
+                            <td><?php echo $datos['min']['alumno'] . ": " . number_format($datos['min']['nota'], 2, ',', '.') ?></td>
                             <?php
                         }
                         ?>
@@ -47,35 +47,7 @@ declare(strict_types=1);
                 </tbody>
             </table>
         </div>
-
-        <div class="container-fluid">
-                <div class="row">
-                    <div class="col-lg-4 col-md-12 alert alert-success">
-                        <h3>Aprobados: </h3>
-                        <p> <?php foreach($evaluaciones['aprobados'] as $alumnos) {
-                            echo "<br>" . $alumnos;
-                            }?> </p>
-                    </div>
-
-                    <div class="col-lg-4 col-md-12 alert alert-warning">
-                        <h3>Suspensos: </h3>
-                        <p> <?php foreach($evaluaciones['suspensos'] as $alumnos) {
-                                echo "<br>" . $alumnos;
-                            }?> </p>
-                    </div>
-
-                    <div class="col-lg-4 col-md-12 alert alert-danger">
-                        <h3>Repiten: </h3>
-                        <p> <?php foreach($evaluaciones['repiten'] as $alumnos) {
-                                echo "<br>" . $alumnos;
-                            }?> </p>
-                    </div>
-                </div>
-        </div>
-
         <?php
-
-
     }
     ?>
     <div class="col-12">

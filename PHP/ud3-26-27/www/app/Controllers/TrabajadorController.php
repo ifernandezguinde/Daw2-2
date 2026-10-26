@@ -1,86 +1,59 @@
 <?php
 declare(strict_types=1);
+
 namespace Com\Daw2\Controllers;
 
 use Com\Daw2\Core\BaseController;
-use Com\Daw2\Models\AuxRolModel;
+use Com\Daw2\Models\AuxCountriesModel;
+use Com\Daw2\Models\AuxRolTrabajadorModel;
 use Com\Daw2\Models\TrabajadorModel;
 
 class TrabajadorController extends BaseController
 {
-    public function listarTrabajadores()
+    public function testDb()
     {
         $model = new TrabajadorModel();
-        $trabajadores = $model->getTrabajadores();
+        $model->getTrabajadores();
+    }
+
+    public function getAllTrabajadores(): void
+    {
         $data = array(
-            'titulo' => 'Listar Trabajadores',
-            'breadcrumb' => ['Inicio', 'Listar Trabajadores'],
-            'trabajadores' => $trabajadores
+            'titulo' => 'Todos los trabajadores',
+            'breadcrumb' => ['Inicio', 'Consultas simples'],
         );
+        $model = new TrabajadorModel();
+        $data['trabajadores'] = $model->getAllTrabajadores();
         $this->view->showViews(array('templates/header.view.php', 'trabajadores.view.php', 'templates/footer.view.php'), $data);
     }
 
-    public function ordenSalario()
+    public function getAllTrabajadoresOrdenadosSalario(): void
     {
-        $model = new TrabajadorModel();
-        $trabajadores = $model->ordenSalario();
         $data = array(
-            'titulo' => 'Ordenar por salario',
-            'breadcrumb' => ['Inicio', 'ordenar por salario'],
-            'trabajadores' => $trabajadores
+            'titulo' => 'Todos los trabajadores ordenados',
+            'breadcrumb' => ['Inicio', 'Consultas simples'],
         );
+        $model = new TrabajadorModel();
+        $data['trabajadores'] = $model->getAllTrabajadoresOrdenados();
         $this->view->showViews(array('templates/header.view.php', 'trabajadores.view.php', 'templates/footer.view.php'), $data);
     }
 
-    public function trabajadoresStandard()
+    public function getTrabajadores(): void
     {
-        $model = new TrabajadorModel();
-        $trabajadores = $model->trabajadoresStandard();
         $data = array(
-            'titulo' => 'Listar trabajadores standard',
-            'breadcrumb' => ['Inicio', 'Listar trabajadores standard'],
-            'trabajadores' => $trabajadores
+            'titulo' => 'Listado trabajadores',
+            'breadcrumb' => ['Inicio', 'Trabajadores'],
         );
-        $this->view->showViews(array('templates/header.view.php', 'trabajadores.view.php', 'templates/footer.view.php'), $data);
-    }
-
-    public function trabajadoresCarlos()
-    {
         $model = new TrabajadorModel();
-        $trabajadores = $model->trabajadoresCarlos();
-        $data = array(
-            'titulo' => 'Listar trabajadores cuyo nombre empiece por Carlos',
-            'breadcrumb' => ['Inicio', 'Listar trabajadores cuyo nombre empiece por Carlos'],
-            'trabajadores' => $trabajadores
-        );
-        $this->view->showViews(array('templates/header.view.php', 'trabajadores.view.php', 'templates/footer.view.php'), $data);
-    }
-
-    public function trabajadorNombre()
-    {
+        $url = http_build_query($_GET);
+        $data['trabajadores'] = $model->getFilterBy($_GET);
+        $auxTrabajadorRolModel = new AuxRolTrabajadorModel();
+        $data['roles'] = $auxTrabajadorRolModel->getAll();
+        $countriesModel = new AuxCountriesModel();
+        $data['countries'] = $countriesModel->getAll();
         $input = filter_var_array($_GET, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-        $rolModel = new AuxRolModel();
-        $roles = $rolModel->listaTrabajadores();
-
-        $trabajadoresModel = new TrabajadorModel();
-        if(empty($_GET['nombre']) && empty($_GET['id_rol'])){
-            $trabajadores = $trabajadoresModel->getTrabajadores();
-        } elseif (isset($_GET['nombre']) && !empty($_GET['nombre'])) {
-            $trabajadores = $trabajadoresModel->trabajadorNombre($input);
-        } elseif (isset($_GET['id_rol'])){
-            $trabajadores = $trabajadoresModel->trabajadorRol($input);
-        }
-
-        $data = array(
-            'titulo' => 'Listar trabajadores por nombre seleccionado',
-            'breadcrumb' => ['Inicio', 'Listar trabajadores por nombre seleccionado'],
-            'trabajadores' => $trabajadores,
-            'roles' => $roles
-        );
-
-
+        $data['input'] = $input;
         $this->view->showViews(array('templates/header.view.php', 'trabajadores.view.php', 'templates/footer.view.php'), $data);
     }
-
 
 }

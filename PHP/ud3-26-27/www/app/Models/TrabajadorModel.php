@@ -1,73 +1,104 @@
 <?php
 declare(strict_types=1);
+
 namespace Com\Daw2\Models;
 
 use Com\Daw2\Core\BaseDbModel;
+use PDO;
+use PDOException;
 
 class TrabajadorModel extends BaseDbModel
 {
+    private const string SELECT_FROM = "SELECT t.*, art.nombre_rol, ac.country_name FROM trabajadores t LEFT JOIN aux_rol_trabajador art ON art.id_rol = t.id_rol LEFT JOIN aux_countries ac ON ac.id = t.id_country";
     public function getTrabajadores(): array
     {
-        return $this->pdo->query('SELECT * FROM trabajadores
-                                            LEFT JOIN ud5.aux_rol_trabajador art on art.id_rol = trabajadores.id_rol
-                                            LEFT JOIN ud5.aux_countries t on t.id = trabajadores.id_country')->fetchAll();
+        $trabajadores = $this->pdo->query('SELECT * FROM trabajadores')->fetchAll();
+        var_dump($trabajadores);
+        return $trabajadores;
     }
-
-    public function ordenSalario(): array
+    public function getAllTrabajadores(): array
     {
-        return $this->pdo->query('SELECT * FROM trabajadores 
-                                            LEFT JOIN ud5.aux_rol_trabajador art on art.id_rol = trabajadores.id_rol
-                                            LEFT JOIN ud5.aux_countries t on t.id = trabajadores.id_country
-                                            ORDER BY salarioBruto DESC ')->fetchAll();
-    }
-
-    public function trabajadoresStandard(): array
-    {
-        return $this->pdo->query("SELECT * FROM trabajadores 
-                                            LEFT JOIN ud5.aux_rol_trabajador art on art.id_rol = trabajadores.id_rol
-                                            LEFT JOIN ud5.aux_countries t on t.id = trabajadores.id_country
-                                            WHERE nombre_rol = 'standard' ")->fetchAll();
-    }
-
-    public function trabajadoresCarlos(): array
-    {
-        return $this->pdo->query("SELECT * FROM trabajadores 
-                                            LEFT JOIN ud5.aux_rol_trabajador art on art.id_rol = trabajadores.id_rol
-                                            LEFT JOIN ud5.aux_countries t on t.id = trabajadores.id_country
-                                            WHERE username LIKE 'Carlos%' ")->fetchAll();
-    }
-
-    public function trabajadorNombre($filters): array
-    {
-
-        $sql = "SELECT * FROM trabajadores 
-                    LEFT JOIN ud5.aux_rol_trabajador art on art.id_rol = trabajadores.id_rol
-                    LEFT JOIN ud5.aux_countries t on t.id = trabajadores.id_country
-                    WHERE username LIKE :nombre ";
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->execute(['nombre' => "%" . $filters['nombre'] . "%"]);
+        $sql = self::SELECT_FROM;
+        $stmt = $this->pdo->query($sql);
         return $stmt->fetchAll();
     }
 
-    public function trabajadorRol($filters): array
+    public function getAllTrabajadoresOrdenados(): array
     {
-
-        $sql = "SELECT * FROM trabajadores 
-                    LEFT JOIN ud5.aux_rol_trabajador art on art.id_rol = trabajadores.id_rol
-                    LEFT JOIN ud5.aux_countries t on t.id = trabajadores.id_country
-                    WHERE nombre_rol LIKE :rol ";
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->execute(['rol' => $filters['id_rol']]);
+        $sql = self::SELECT_FROM . " ORDER BY salarioBruto DESC";
+        $stmt = $this->pdo->query($sql);
         return $stmt->fetchAll();
     }
 
-    public function trabajadorSalarioBase($filters): array
+    public function getFilterBy(array $filtros): array
     {
-        $sql = "SELECT * FROM trabajadores 
-                    LEFT JOIN ud5.aux_rol_trabajador art on art.id_rol = trabajadores.id_rol
-                    LEFT JOIN ud5.aux_countries t on t.id = trabajadores.id_country
-                    :sql ";
+        $sql = self::SELECT_FROM;
+        $values = [];
+        $condiciones = [];
+        if (!empty($filtros['username'])) {
+            $condiciones[] = "username LIKE :username";
+            $values["username"] = "%" . $filtros['username'] . "%";
+        }
+        if (!empty($filtros['id_rol'])) {
+            $condiciones[] = "t.id_rol = :id_rol";
+            $values["id_rol"] = $filtros['id_rol'];
+        }
+        if (!empty($filtros['min_salarioBruto'])) {
+            $condiciones[] = "salarioBruto >= :min_salarioBruto";
+            $values["min_salarioBruto"] = $filtros['min_salarioBruto'];
+        }
+        if (!empty($filtros['max_salarioBruto'])) {
+            $condiciones[] = "salarioBruto <= :max_salarioBruto";
+            $values["max_salarioBruto"] = $filtros['max_salarioBruto'];
+        }
+        if (!empty($filtros['min_retencionIRPF'])) {
+            $condiciones[] = "retencionIRPF >= :min_retencionIRPF";
+            $values["min_retencionIRPF"] = $filtros['min_retencionIRPF'];
+        }
+        if (!empty($filtros['max_retencionIRPF'])) {
+            $condiciones[] = "retencionIRPF <= :max_retencionIRPF";
+            $values["max_retencionIRPF"] = $filtros['max_retencionIRPF'];
+        }
+        if (!empty($filtros['id_country']) && is_array($filtros['id_country'])) {
+            $countries = [];
+            $i = 1;
+            foreach($filtros['id_country'] as $idCountry) {
+                $countries[":id_country{$i}"] = $idCountry;
+                $i++;
+            }
+            $claves = array_keys($countries);
+            $condiciones[] =  "t.id_country IN (" . implode(", ", $claves) . ")";
+            $values = array_merge($values, $countries);
+        }
+        if ($condiciones !== []) {
+            $sql .= " WHERE " . implode(" AND ", $condiciones);
+        }
+
+        if ($filtros['order'] == 1) {
+            $sql .= " ORDER BY username ASC";
+        } elseif ($filtros['order'] == -1) {
+            $sql .= " ORDER BY username DESC";
+        } elseif ($filtros['order'] == 2) {
+            $sql .= " ORDER BY salarioBruto ASC";
+        } elseif ($filtros['order'] == -2) {
+            $sql .= " ORDER BY salarioBruto DESC";
+        } elseif ($filtros['order'] == 3) {
+            $sql .= " ORDER BY retencionIRPF ASC";
+        } elseif ($filtros['order'] == -3) {
+            $sql .= " ORDER BY retencionIRPF DESC";
+        } elseif ($filtros['order'] == 4) {
+            $sql .= " ORDER BY nombre_rol ASC";
+        } elseif ($filtros['order'] == -4) {
+            $sql .= " ORDER BY nombre_rol DESC";
+        } elseif ($filtros['order'] == 5) {
+            $sql .= " ORDER BY country_name ASC";
+        } elseif ($filtros['order'] == -5) {
+            $sql .= " ORDER BY country_name DESC";
+        }
+
         $stmt = $this->pdo->prepare($sql);
-        $stmt->execute(['sql' => $sql]);
+        $stmt->execute($values);
+        return $stmt->fetchAll();
     }
+
 }

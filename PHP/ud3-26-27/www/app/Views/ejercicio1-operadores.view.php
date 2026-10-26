@@ -1,1 +1,0 @@
-<p>El cuadrado de <?php echo $x?> es <?php echo $cuadrado?></p>

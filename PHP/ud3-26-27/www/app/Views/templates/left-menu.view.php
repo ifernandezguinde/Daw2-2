@@ -11,7 +11,7 @@
           </li> 
             <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-          <li class="nav-item <?php echo (in_array($_SERVER['REQUEST_URI'], [$_ENV['host.folder'] . 'demo-proveedores'])) ? 'menu-open' : '';?>">
+          <li class="nav-item <?php echo (in_array(strtok($_SERVER['REQUEST_URI'] ?? '/', '?') , [$_ENV['host.folder'] . 'demo-proveedores', $_ENV['host.folder'] . 'trabajadores'])) ? 'menu-open' : '';?>">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
@@ -20,233 +20,62 @@
               </p>
             </a>
             <ul class="nav nav-treeview">
+                <li class="nav-item">
+                    <a href="<?php echo $_ENV['host.folder'] ?>trabajadores" class="nav-link <?php echo strtok($_SERVER['REQUEST_URI'] ?? '/', '?') === $_ENV['host.folder'] . 'trabajadores' ? 'active' : ''; ?>">
+                        <i class="fas fa-briefcase nav-icon"></i>
+                        <p>Trabajadores</p>
+                    </a>
+                </li>
               <li class="nav-item">
-                <a href="<?php echo $_ENV['host.folder'] ?>demo-proveedores" class="nav-link <?php echo $_SERVER['REQUEST_URI'] === $_ENV['host.folder'] . 'demo-proveedores' ? 'active' : ''; ?>">
+                <a href="<?php echo $_ENV['host.folder'] ?>demo-proveedores" class="nav-link <?php echo strtok($_SERVER['REQUEST_URI'] ?? '/', '?') === $_ENV['host.folder'] . 'demo-proveedores' ? 'active' : ''; ?>">
                   <i class="fas fa-laptop-code nav-icon"></i>
                   <p>Demo Proveedores</p>
                 </a>
               </li>              
             </ul>
           </li>
-            <li class="nav-item menu-close">
+            <li class="nav-item">
                 <a href="#" class="nav-link">
-                    <i class="fas fa-biohazard"></i>
+                    <i class="nav-icon fas fa-code"></i>
                     <p>
-                        OPERADORES
+                        Ej. operadores
                         <i class="right fas fa-angle-left"></i>
                     </p>
                 </a>
                 <ul class="nav nav-treeview">
+                    <?php
+                    for ($i = 1; $i < 11; $i++):
+                    ?>
                     <li class="nav-item">
-                        <a href="ejercicio1-operadores" class="nav-link">
-                            <i class="fas fa-biohazard"></i>
-                            <p>Operadores 1</p>
+                        <a href="<?php echo $_ENV['host.folder'] ?>ejercicio<?php echo $i; ?>-operadores" class="nav-link <?php echo $_SERVER['REQUEST_URI'] === $_ENV['host.folder'] . "ejercicio{$i}-operadores" ? 'active' : ''; ?>">
+                            <i class="fas fa-equals nav-icon"></i>
+                            <p>Ejercicio <?php echo $i; ?></p>
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a href="ejercicio2-operadores" class="nav-link">
-                            <i class="fas fa-biohazard"></i>
-                            <p>Operadores 2</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="ejercicio3-operadores" class="nav-link">
-                            <i class="fas fa-biohazard"></i>
-                            <p>Operadores 3</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="ejercicio4-operadores" class="nav-link">
-                            <i class="fas fa-biohazard"></i>
-                            <p>Operadores 4</p>
-                        </a>
-                    </li>
+                    <?php endfor; ?>
                 </ul>
             </li>
-
-            <li class="nav-item menu-close">
+            <li class="nav-item">
                 <a href="#" class="nav-link">
-                    <i class="fas fa-biohazard"></i>
+                    <i class="nav-icon fas fa-infinity"></i>
                     <p>
-                        ESTRUCTURAS
+                        Ej. iterativas
                         <i class="right fas fa-angle-left"></i>
                     </p>
                 </a>
                 <ul class="nav nav-treeview">
-                    <li class="nav-item">
-                        <a href="ejercicio1-estructuras" class="nav-link">
-                            <i class="fas fa-biohazard"></i>
-                            <p>Estructuras 1</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="ejercicio2-estructuras" class="nav-link">
-                            <i class="fas fa-biohazard"></i>
-                            <p>Estructuras 2</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="ejercicio3-estructuras" class="nav-link">
-                            <i class="fas fa-biohazard"></i>
-                            <p>Estructuras 3</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="ejercicio4-estructuras" class="nav-link">
-                            <i class="fas fa-biohazard"></i>
-                            <p>Estructuras 4</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="ejercicio5-estructuras" class="nav-link">
-                            <i class="fas fa-biohazard"></i>
-                            <p>Estructuras 5</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="ejercicio6-estructuras" class="nav-link">
-                            <i class="fas fa-biohazard"></i>
-                            <p>Estructuras 6</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="ejercicio7-estructuras" class="nav-link">
-                            <i class="fas fa-biohazard"></i>
-                            <p>Estructuras 7</p>
-                        </a>
-                    </li>
+                    <?php
+                    for ($i = 1; $i < 11; $i++):
+                        ?>
+                        <li class="nav-item">
+                            <a href="<?php echo $_ENV['host.folder'] ?>iterativas<?php echo $i; ?>" class="nav-link <?php echo $_SERVER['REQUEST_URI'] === $_ENV['host.folder'] . "iterativas{$i}" ? 'active' : ''; ?>">
+                                <i class="fas fa-equals nav-icon"></i>
+                                <p>Ejercicio <?php echo $i; ?></p>
+                            </a>
+                        </li>
+                    <?php endfor; ?>
                 </ul>
             </li>
-
-            <li class="nav-item menu-close">
-                <a href="#" class="nav-link">
-                    <i class="fas fa-biohazard"></i>
-                    <p>
-                        ITERATIVAS
-                        <i class="right fas fa-angle-left"></i>
-                    </p>
-                </a>
-                <ul class="nav nav-treeview">
-                    <li class="nav-item">
-                        <a href="ejercicio1-iterativas" class="nav-link">
-                            <i class="fas fa-biohazard"></i>
-                            <p>Iterativas 1</p>
-                        </a>
-                    </li>
-                </ul>
-                <ul class="nav nav-treeview">
-                    <li class="nav-item">
-                        <a href="ejercicio2-iterativas" class="nav-link">
-                            <i class="fas fa-biohazard"></i>
-                            <p>Iterativas 2</p>
-                        </a>
-                    </li>
-                </ul>
-                <ul class="nav nav-treeview">
-                    <li class="nav-item">
-                        <a href="ejercicio3-iterativas" class="nav-link">
-                            <i class="fas fa-biohazard"></i>
-                            <p>Iterativas 3</p>
-                        </a>
-                    </li>
-                </ul>
-                <ul class="nav nav-treeview">
-                    <li class="nav-item">
-                        <a href="ejercicio4-iterativas" class="nav-link">
-                            <i class="fas fa-biohazard"></i>
-                            <p>Iterativas 4</p>
-                        </a>
-                    </li>
-                </ul>
-                <ul class="nav nav-treeview">
-                    <li class="nav-item">
-                        <a href="ejercicio5-iterativas" class="nav-link">
-                            <i class="fas fa-biohazard"></i>
-                            <p>Iterativas 5</p>
-                        </a>
-                    </li>
-                </ul>
-                <ul class="nav nav-treeview">
-                    <li class="nav-item">
-                        <a href="ejercicio8-iterativas" class="nav-link">
-                            <i class="fas fa-biohazard"></i>
-                            <p>Iterativas 8</p>
-                        </a>
-                    </li>
-                </ul>
-            </li>
-
-            <li class="nav-item menu-close">
-                <a href="#" class="nav-link">
-                    <i class="fas fa-biohazard"></i>
-                    <p>
-                        PEDIDOS Y CLIENTES
-                        <i class="right fas fa-angle-left"></i>
-                    </p>
-                </a>
-                <ul class="nav nav-treeview">
-                    <li class="nav-item">
-                        <a href="ejercicioPedidos" class="nav-link">
-                            <i class="fas fa-biohazard"></i>
-                            <p>Pedidos y Clientes</p>
-                        </a>
-                    </li>
-                </ul>
-
-            </li>
-
-            <li class="nav-item menu-open">
-                <a href="#" class="nav-link">
-                    <i class="fas fa-biohazard"></i>
-                    <p>
-                        TRABAJADORES
-                        <i class="right fas fa-angle-left"></i>
-                    </p>
-                </a>
-                <ul class="nav nav-treeview">
-                    <li class="nav-item">
-                        <a href="trabajadores" class="nav-link">
-                            <i class="fas fa-biohazard"></i>
-                            <p>Listar trabajadores</p>
-                        </a>
-                    </li>
-                </ul>
-                <ul class="nav nav-treeview">
-                    <li class="nav-item">
-                        <a href="trabajadoresSalario" class="nav-link">
-                            <i class="fas fa-biohazard"></i>
-                            <p>Listar trabajadores por salario</p>
-                        </a>
-                    </li>
-                </ul>
-                <ul class="nav nav-treeview">
-                    <li class="nav-item">
-                        <a href="trabajadoresStandard" class="nav-link">
-                            <i class="fas fa-biohazard"></i>
-                            <p>Listar trabajadores standard</p>
-                        </a>
-                    </li>
-                </ul>
-                <ul class="nav nav-treeview">
-                    <li class="nav-item">
-                        <a href="trabajadoresCarlos" class="nav-link">
-                            <i class="fas fa-biohazard"></i>
-                            <p>Listar trabajadores Carlos</p>
-                        </a>
-                    </li>
-                </ul>
-                <ul class="nav nav-treeview">
-                    <li class="nav-item">
-                        <a href="trabajadorNombre" class="nav-link">
-                            <i class="fas fa-biohazard"></i>
-                            <p>Filtros</p>
-                        </a>
-                    </li>
-                </ul>
-
-
-            </li>
-
         </ul>
       </nav>
       <!-- /.sidebar-menu -->
