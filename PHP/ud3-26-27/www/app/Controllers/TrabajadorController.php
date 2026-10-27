@@ -45,7 +45,6 @@ class TrabajadorController extends BaseController
             'breadcrumb' => ['Inicio', 'Trabajadores'],
         );
         $model = new TrabajadorModel();
-        $url = http_build_query($_GET);
         $data['trabajadores'] = $model->getFilterBy($_GET);
         $auxTrabajadorRolModel = new AuxRolTrabajadorModel();
         $data['roles'] = $auxTrabajadorRolModel->getAll();
@@ -53,6 +52,9 @@ class TrabajadorController extends BaseController
         $data['countries'] = $countriesModel->getAll();
         $input = filter_var_array($_GET, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $data['input'] = $input;
+        $getOrder = $_GET;
+        unset($getOrder['order']);
+        $data['orderParams'] = http_build_query($getOrder);
         $this->view->showViews(array('templates/header.view.php', 'trabajadores.view.php', 'templates/footer.view.php'), $data);
     }
 

@@ -10,6 +10,7 @@ use PDOException;
 class TrabajadorModel extends BaseDbModel
 {
     private const string SELECT_FROM = "SELECT t.*, art.nombre_rol, ac.country_name FROM trabajadores t LEFT JOIN aux_rol_trabajador art ON art.id_rol = t.id_rol LEFT JOIN aux_countries ac ON ac.id = t.id_country";
+    private const int DEFAULT_ORDER_INDEX = 1;
     public function getTrabajadores(): array
     {
         $trabajadores = $this->pdo->query('SELECT * FROM trabajadores')->fetchAll();
@@ -99,6 +100,17 @@ class TrabajadorModel extends BaseDbModel
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute($values);
         return $stmt->fetchAll();
+    }
+
+    public function getOrderIndex(array $filtros): int
+    {
+        if (empty($filtros['order'])) {
+            return self::DEFAULT_ORDER_INDEX;
+        } elseif (filter_var($filtros['order'], FILTER_VALIDATE_INT) === false || $filtros['order'] < 1 || $filtros['order'] > count(self::ORDER_FIELDS)) {
+            return self::DEFAULT_ORDER_INDEX;
+        } else {
+            return (int)$filtros['order'];
+        }
     }
 
 }

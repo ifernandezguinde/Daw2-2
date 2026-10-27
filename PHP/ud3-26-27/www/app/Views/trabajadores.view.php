@@ -97,11 +97,11 @@
                 <table id="tabladatos" class="table table-striped">                    
                     <thead>
                         <tr>
-                            <th><a href="/trabajadores?order=<?php echo $_GET['order'] == 1 ? '-1' : '1'; ?>">Username</a> <i class="fas fa-sort-amount-<?php echo $_GET['order'] == 1 ? 'down' : ($_GET['order'] == -1 ? 'up' : ''); ?>-alt"></i> </th>
-                            <th><a href="/trabajadores?order=<?php echo $_GET['order'] == 2 ? '-2' : '2'; ?>">Salario Bruto</a> <i class="fas fa-sort-amount-<?php echo $_GET['order'] == 2 ? 'down' : ($_GET['order'] == -2 ? 'up' : ''); ?>-alt"></i> </th>
-                            <th><a href="/trabajadores?order=<?php echo $_GET['order'] == 3 ? '-3' : '3'; ?>">Retención</a> <i class="fas fa-sort-amount-<?php echo $_GET['order'] == 3 ? 'down' : ($_GET['order'] == -3 ? 'up' : ''); ?>-alt"></i> </th>
-                            <th><a href="/trabajadores?order=<?php echo $_GET['order'] == 4 ? '-4' : '4'; ?>">Rol</a> <i class="fas fa-sort-amount-<?php echo $_GET['order'] == 4 ? 'down' : ($_GET['order'] == -4 ? 'up' : ''); ?>-alt"></i> </th>
-                            <th><a href="/trabajadores?order=<?php echo $_GET['order'] == 5 ? '-5' : '5'; ?>">País</a> <i class="fas fa-sort-amount-<?php echo $_GET['order'] == 5 ? 'down' : ($_GET['order'] == -5 ? 'up' : ''); ?>-alt"></i> </th>
+                            <th><a href="/trabajadores?order=<?php echo $_GET['order'] == 1 ? '-1' : '1'; ?> & <?php echo $orderParams; ?>">Username</a> <i class="fas fa-sort-amount-<?php echo $_GET['order'] == 1 ? 'down' : ($_GET['order'] == -1 ? 'up' : ''); ?>-alt"></i> </th>
+                            <th><a href="/trabajadores?order=<?php echo $_GET['order'] == 2 ? '-2' : '2'; ?> & <?php echo $orderParams; ?>">Salario Bruto</a> <i class="fas fa-sort-amount-<?php echo $_GET['order'] == 2 ? 'down' : ($_GET['order'] == -2 ? 'up' : ''); ?>-alt"></i> </th>
+                            <th><a href="/trabajadores?order=<?php echo $_GET['order'] == 3 ? '-3' : '3'; ?> & <?php echo $orderParams; ?>">Retención</a> <i class="fas fa-sort-amount-<?php echo $_GET['order'] == 3 ? 'down' : ($_GET['order'] == -3 ? 'up' : ''); ?>-alt"></i> </th>
+                            <th><a href="/trabajadores?order=<?php echo $_GET['order'] == 4 ? '-4' : '4'; ?> & <?php echo $orderParams; ?>">Rol</a> <i class="fas fa-sort-amount-<?php echo $_GET['order'] == 4 ? 'down' : ($_GET['order'] == -4 ? 'up' : ''); ?>-alt"></i> </th>
+                            <th><a href="/trabajadores?order=<?php echo $_GET['order'] == 5 ? '-5' : '5'; ?> & <?php echo $orderParams; ?>">País</a> <i class="fas fa-sort-amount-<?php echo $_GET['order'] == 5 ? 'down' : ($_GET['order'] == -5 ? 'up' : ''); ?>-alt"></i> </th>
                         </tr>
                     </thead>
                     <tbody>
