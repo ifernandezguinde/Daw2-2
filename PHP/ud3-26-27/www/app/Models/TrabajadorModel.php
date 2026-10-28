@@ -9,8 +9,9 @@ use PDOException;
 
 class TrabajadorModel extends BaseDbModel
 {
+    private const array ORDER_FIELDS = ['t.username', 't.salarioBruto', 't.retencionIRPF', 'nombre_rol', 'country_name'];
+    private const DEFAULT_ORDER_INDEX = 1;
     private const string SELECT_FROM = "SELECT t.*, art.nombre_rol, ac.country_name FROM trabajadores t LEFT JOIN aux_rol_trabajador art ON art.id_rol = t.id_rol LEFT JOIN aux_countries ac ON ac.id = t.id_country";
-    private const int DEFAULT_ORDER_INDEX = 1;
     public function getTrabajadores(): array
     {
         $trabajadores = $this->pdo->query('SELECT * FROM trabajadores')->fetchAll();
@@ -74,27 +75,11 @@ class TrabajadorModel extends BaseDbModel
         if ($condiciones !== []) {
             $sql .= " WHERE " . implode(" AND ", $condiciones);
         }
+        $sentido = !empty($filtros['sentido']) && $filtros['sentido'] === 'desc' ? 'DESC' : 'ASC';
+        $sql .= " ORDER BY " . self::ORDER_FIELDS[$this->getOrderIndex($filtros) - 1] . " $sentido";
 
-        if ($filtros['order'] == 1) {
-            $sql .= " ORDER BY username ASC";
-        } elseif ($filtros['order'] == -1) {
-            $sql .= " ORDER BY username DESC";
-        } elseif ($filtros['order'] == 2) {
-            $sql .= " ORDER BY salarioBruto ASC";
-        } elseif ($filtros['order'] == -2) {
-            $sql .= " ORDER BY salarioBruto DESC";
-        } elseif ($filtros['order'] == 3) {
-            $sql .= " ORDER BY retencionIRPF ASC";
-        } elseif ($filtros['order'] == -3) {
-            $sql .= " ORDER BY retencionIRPF DESC";
-        } elseif ($filtros['order'] == 4) {
-            $sql .= " ORDER BY nombre_rol ASC";
-        } elseif ($filtros['order'] == -4) {
-            $sql .= " ORDER BY nombre_rol DESC";
-        } elseif ($filtros['order'] == 5) {
-            $sql .= " ORDER BY country_name ASC";
-        } elseif ($filtros['order'] == -5) {
-            $sql .= " ORDER BY country_name DESC";
+        foreach ($filtros['username'] as $username) {
+            
         }
 
         $stmt = $this->pdo->prepare($sql);
@@ -112,5 +97,4 @@ class TrabajadorModel extends BaseDbModel
             return (int)$filtros['order'];
         }
     }
-
 }
