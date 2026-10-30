@@ -11,6 +11,7 @@ class TrabajadorModel extends BaseDbModel
 {
     private const array ORDER_FIELDS = ['t.username', 't.salarioBruto', 't.retencionIRPF', 'nombre_rol', 'country_name'];
     private const DEFAULT_ORDER_INDEX = 1;
+    private const ELEMENTS_PER_PAGE = 20;
     private const string SELECT_FROM = "SELECT t.*, art.nombre_rol, ac.country_name FROM trabajadores t LEFT JOIN aux_rol_trabajador art ON art.id_rol = t.id_rol LEFT JOIN aux_countries ac ON ac.id = t.id_country";
     public function getTrabajadores(): array
     {
@@ -37,6 +38,7 @@ class TrabajadorModel extends BaseDbModel
         $sql = self::SELECT_FROM;
         $values = [];
         $condiciones = [];
+
         if (!empty($filtros['username'])) {
             $condiciones[] = "username LIKE :username";
             $values["username"] = "%" . $filtros['username'] . "%";
@@ -76,11 +78,8 @@ class TrabajadorModel extends BaseDbModel
             $sql .= " WHERE " . implode(" AND ", $condiciones);
         }
         $sentido = !empty($filtros['sentido']) && $filtros['sentido'] === 'desc' ? 'DESC' : 'ASC';
-        $sql .= " ORDER BY " . self::ORDER_FIELDS[$this->getOrderIndex($filtros) - 1] . " $sentido";
-
-//        foreach ($filtros['username'] as $username) {
-//
-//        }
+        $offset = isset($filtros['page']) ? ($filtros['page'] - 1) * self::ELEMENTS_PER_PAGE : 1;
+        $sql .= " ORDER BY " . self::ORDER_FIELDS[$this->getOrderIndex($filtros) - 1] . " $sentido" . " LIMIT " . $offset . ", " . self::ELEMENTS_PER_PAGE;
 
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute($values);
@@ -96,5 +95,55 @@ class TrabajadorModel extends BaseDbModel
         } else {
             return (int)$filtros['order'];
         }
+    }
+
+    public function getPages(array $filtros): int
+    {
+        $sql = self::SELECT_FROM;
+        $values = [];
+        $condiciones = [];
+
+        if (!empty($filtros['username'])) {
+            $condiciones[] = "username LIKE :username";
+            $values["username"] = "%" . $filtros['username'] . "%";
+        }
+        if (!empty($filtros['id_rol'])) {
+            $condiciones[] = "t.id_rol = :id_rol";
+            $values["id_rol"] = $filtros['id_rol'];
+        }
+        if (!empty($filtros['min_salarioBruto'])) {
+            $condiciones[] = "salarioBruto >= :min_salarioBruto";
+            $values["min_salarioBruto"] = $filtros['min_salarioBruto'];
+        }
+        if (!empty($filtros['max_salarioBruto'])) {
+            $condiciones[] = "salarioBruto <= :max_salarioBruto";
+            $values["max_salarioBruto"] = $filtros['max_salarioBruto'];
+        }
+        if (!empty($filtros['min_retencionIRPF'])) {
+            $condiciones[] = "retencionIRPF >= :min_retencionIRPF";
+            $values["min_retencionIRPF"] = $filtros['min_retencionIRPF'];
+        }
+        if (!empty($filtros['max_retencionIRPF'])) {
+            $condiciones[] = "retencionIRPF <= :max_retencionIRPF";
+            $values["max_retencionIRPF"] = $filtros['max_retencionIRPF'];
+        }
+        if (!empty($filtros['id_country']) && is_array($filtros['id_country'])) {
+            $countries = [];
+            $i = 1;
+            foreach($filtros['id_country'] as $idCountry) {
+                $countries[":id_country{$i}"] = $idCountry;
+                $i++;
+            }
+            $claves = array_keys($countries);
+            $condiciones[] =  "t.id_country IN (" . implode(", ", $claves) . ")";
+            $values = array_merge($values, $countries);
+        }
+        if ($condiciones !== []) {
+            $sql .= " WHERE " . implode(" AND ", $condiciones);
+        }
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute($values);
+        $num_rows = $stmt->rowCount();
+        return (int)ceil($num_rows / self::ELEMENTS_PER_PAGE);
     }
 }

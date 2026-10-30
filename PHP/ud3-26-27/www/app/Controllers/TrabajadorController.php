@@ -53,6 +53,11 @@ class TrabajadorController extends BaseController
         $data['countries'] = $countriesModel->getAll();
         $input = filter_var_array($_GET, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $data['input'] = $input;
+        $page = isset($input['page']) ? $input['page'] : 1;
+        $data['page'] = $page;
+        $maxPage = $model->getPages($_GET);
+        $data['maxPage'] = $maxPage;
+
         //No modificamos la superglobal, la copiamos en $getOrder
         $getOrder = $_GET;
         unset($getOrder['order']);

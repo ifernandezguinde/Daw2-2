@@ -15,7 +15,7 @@
                             <div class="mb-3">
                                 <label for="username">Username:</label>
                                 <input type="text" class="form-control" name="username" id="username"
-                                       value="<?php echo $input['username'] ?? ''; ?>"/>
+                                       value=" "/>
                             </div>
                         </div>
                         <div class="col-12 col-lg-4">
@@ -122,7 +122,7 @@
                         <?php
                         foreach ($trabajadores as $trabajador) {
                         ?>
-                    <tr class="<?php echo $trabajador['activo'] ? '' : 'table-danger'; ?>">
+                    <tr class="<?php echo $trabajador['activo'] ?: 'table-danger'; ?>">
                         <td><?php echo $trabajador['username'] ?></td>
                         <td><?php echo $trabajador['salarioBruto'] ?></td>
                         <td><?php echo $trabajador['retencionIRPF'] ?>%</td>
@@ -134,6 +134,38 @@
                     ?>
                     </tbody>
                 </table>
+            </div>
+            <div class="card-footer">
+                <nav aria-label="Navegacion por paginas">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item">
+                            <a class="page-link" href="/trabajadores?page=1&order=1" aria-label="First">
+                                <span aria-hidden="true">&laquo;</span>
+                                <span class="sr-only">First</span>
+                            </a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="/trabajadores?&page=<?php echo $page - 1 ?>&order=1" aria-label="Previous">
+                                <span aria-hidden="true">&lt;</span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                        </li>
+
+                        <li class="page-item active"><a class="page-link" href="#"><?php echo $page ?></a></li>
+                        <li class="page-item">
+                            <a class="page-link" href="/trabajadores?page=<?php echo $page + 1 ?>&order=1" aria-label="Next">
+                                <span aria-hidden="true">&gt;</span>
+                                <span class="sr-only">Next</span>
+                            </a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="/trabajadores?page=<?php echo $maxPage ?>&order=1" aria-label="Last">
+                                <span aria-hidden="true">&raquo;</span>
+                                <span class="sr-only">Last</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
             </div>
         </div>
     </div>
