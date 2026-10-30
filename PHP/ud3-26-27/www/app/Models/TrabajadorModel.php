@@ -78,9 +78,9 @@ class TrabajadorModel extends BaseDbModel
         $sentido = !empty($filtros['sentido']) && $filtros['sentido'] === 'desc' ? 'DESC' : 'ASC';
         $sql .= " ORDER BY " . self::ORDER_FIELDS[$this->getOrderIndex($filtros) - 1] . " $sentido";
 
-        foreach ($filtros['username'] as $username) {
-            
-        }
+//        foreach ($filtros['username'] as $username) {
+//
+//        }
 
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute($values);
