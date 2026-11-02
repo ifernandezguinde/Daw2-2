@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Com\Daw2\Controllers;
@@ -47,22 +48,24 @@ class TrabajadorController extends BaseController
         $model = new TrabajadorModel();
         $data['trabajadores'] = $model->getFilterBy($_GET);
         $data['order'] = $model->getOrderIndex($_GET);
+        $data['currentPage'] = $model->getCurrentPage($_GET);
+        $data['maxPage'] = $model->getLastPage($_GET);
         $auxTrabajadorRolModel = new AuxRolTrabajadorModel();
         $data['roles'] = $auxTrabajadorRolModel->getAll();
         $countriesModel = new AuxCountriesModel();
         $data['countries'] = $countriesModel->getAll();
         $input = filter_var_array($_GET, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $data['input'] = $input;
-        $page = isset($input['page']) ? $input['page'] : 1;
-        $data['page'] = $page;
-        $maxPage = $model->getPages($_GET);
-        $data['maxPage'] = $maxPage;
-
         //No modificamos la superglobal, la copiamos en $getOrder
         $getOrder = $_GET;
+        $data['baseUrl'] = strtok($_SERVER['REQUEST_URI'] ?? '/', '?');
         unset($getOrder['order']);
         unset($getOrder['sentido']);
         $data['queryParams'] = http_build_query($getOrder);
+
+        $getPage = $_GET;
+        unset($getPage['page']);
+        $data['queryParamsPage'] = http_build_query($getPage);
         $this->view->showViews(array('templates/header.view.php', 'trabajadores.view.php', 'templates/footer.view.php'), $data);
     }
 
