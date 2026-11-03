@@ -10,25 +10,17 @@
                 </div>
                 <!-- Card Body -->
                 <div class="card-body">
-                    <input type="hidden" name="order" value="<?php echo $order; ?>"/>
+                    <input type="hidden" name="" value=""/>
                     <div class="row">
-
-                        <div class="col-12 col-lg-4">
-                            <div class="mb-3">
-                                <label for="username">Username:</label>
-                                <input type="text" class="form-control" name="username" id="username"
-                                       value="<?php echo $input['username'] ?? ''; ?>"/>
-                            </div>
-                        </div>
 
                         <div class="col-12 col-lg-4">
                             <div class="form-group">
                                 <label for="id_rol">Rol:</label>
-                                <select name="id_rol" id="id_rol" class="form-control select2">
+                                <select name="id_rol" id="id_rol" class="form-control select2" multiple>
                                     <option value="">-</option>
                                     <?php foreach ($roles as $rol) {
                                         ?>
-                                        <option value="<?php echo $rol['id_rol'] ?>" <?php echo (isset($input['id_rol']) && $rol['id_rol'] == $input['id_rol']) ? 'selected' : ''; ?>><?php echo ucfirst($rol['nombre_rol']); ?></option>
+                                        <option value="<?php echo $rol['id_rol'] ?>" <?php echo (isset($input['id_rol']) && $rol['id_rol'] == $input['id_rol']) ? 'selected' : ''; ?>><?php echo ucfirst($rol['rol']); ?></option>
                                         <?php
                                     }
                                     ?>
@@ -36,6 +28,17 @@
                                 <p class="text-error small"><?php echo $errors['id_rol'] ?? ''; ?></p>
                             </div>
                         </div>
+
+                        <div class="col-12 col-lg-4">
+                            <div class="mb-3">
+                                // TO DO
+                                <label for="username">Nombre:</label>
+                                <input type="text" class="form-control" name="username" id="username"
+                                       value="<?php echo $input['username'] ?? ''; ?>"/>
+                            </div>
+                        </div>
+
+
 
                         <div class="col-12 col-lg-4">
                             <div class="mb-3">
