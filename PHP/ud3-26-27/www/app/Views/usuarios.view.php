@@ -10,9 +10,10 @@
                 </div>
                 <!-- Card Body -->
                 <div class="card-body">
-                    <input type="hidden" name="" value=""/>
+                    <input type="hidden" name="order" value="<?php echo $order; ?>"/>
                     <div class="row">
 
+                        <!-- ROL -->
                         <div class="col-12 col-lg-4">
                             <div class="form-group">
                                 <label for="id_rol">Rol:</label>
@@ -29,69 +30,38 @@
                             </div>
                         </div>
 
+                        <!-- EMAIL -->
                         <div class="col-12 col-lg-4">
                             <div class="mb-3">
-                                // TO DO
-                                <label for="username">Nombre:</label>
-                                <input type="text" class="form-control" name="username" id="username"
-                                       value="<?php echo $input['username'] ?? ''; ?>"/>
+                                <label for="email">Email:</label>
+                                <input type="text" class="form-control" name="email" id="email"
+                                       value="<?php echo $input['email'] ?? ''; ?>"/>
                             </div>
                         </div>
 
-
-
+                        <!-- NOMBRE -->
                         <div class="col-12 col-lg-4">
                             <div class="mb-3">
-                                <label for="min_salarioBruto">Salario Bruto:</label>
-                                <div class="row">
-                                    <div class="col-6">
-                                        <input type="text" class="form-control" name="min_salarioBruto"
-                                               id="min_salarioBruto"
-                                               value="<?php echo $input['min_salarioBruto'] ?? '' ?>"
-                                               placeholder="Mínimo"/>
-                                    </div>
-                                    <div class="col-6">
-                                        <input type="text" class="form-control" name="max_salarioBruto"
-                                               id="max_SalarioBruto"
-                                               value="<?php echo $input['max_salarioBruto'] ?? '' ?>"
-                                               placeholder="Máximo"/>
-                                    </div>
-                                </div>
+                                <label for="nombre">Nombre:</label>
+                                <input type="text" class="form-control" name="nombre" id="nombre"
+                                       value="<?php echo $input['nombre'] ?? ''; ?>"/>
                             </div>
                         </div>
 
-                        <div class="col-12 col-lg-4">
-                            <div class="mb-3">
-                                <label for="min_retencionIRPF">Rentención:</label>
-                                <div class="row">
-                                    <div class="col-6">
-                                        <input type="text" class="form-control" name="min_retencionIRPF"
-                                               id="min_retencionIRPF"
-                                               value="<?php echo $input['min_retencionIRPF'] ?? '' ?>"
-                                               placeholder="Mínimo"/>
-                                    </div>
-                                    <div class="col-6">
-                                        <input type="text" class="form-control" name="max_retencionIRPF"
-                                               id="max_retencionIRPF"
-                                               value="<?php echo $input['max_retencionIRPF'] ?? '' ?>"
-                                               placeholder="Máximo"/>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
+                        <!-- IDIOMA -->
                         <div class="col-12 col-lg-6">
                             <div class="form-group">
-                                <label for="id_country">Idioma:</label>
+                                <label for="idioma">Idioma:</label>
                                 <select name="idioma" id="idioma" class="form-control select2">
+                                    <option value="">-</option>
                                     <?php foreach ($idioma as $idiom) {
                                         ?>
-                                        <option value="<?php echo isset($idiom) ?: $idiom ?></option>
+                                        <option value="<?php echo $idiom ?>" <?php echo (isset($input['idioma']) && $idiom == $input['idioma']) ? 'selected' : '';
+                                        ?>><?php echo ucfirst($idiom); ?></option>
                                         <?php
                                     }
                                     ?>
                                 </select>
-                                <p class="text-error small"><?php echo $errors['id_country'] ?? ''; ?></p>
                             </div>
                         </div>
 
@@ -119,20 +89,23 @@
                 <!--<form action="./?sec=formulario" method="post">                   -->
                 <table id="tabladatos" class="table table-striped">
                     <thead>
-                    <tr>
-                        <th><a href="/usuarios?order=1">Nombre</a> <i class="fas fa-sort-amount-down-alt"></i></th>
-                        <th><a href="/usuarios?order=2">Rol</a> </th>
-                        <th><a href="/usuarios?order=3">email</a> </th>
-                        <th><a href="/usuarios?order=4">Ultimo acceso</a> </th>
-                        <th><a href="/usuarios?order=5">Idioma</a> </th>
-                        <th><a href="/usuarios?order=6">Opciones</a> </th>
-                    </tr>
+                        <tr>
+                            <?php
+                            require_once '../app/Helpers/form_helper.php';
+                            echo printTableHeader(
+                                    ['rol', 'email', 'nombre', 'idioma'],
+                                    $order,
+                                    $input['sentido'] ?? null,
+                                    $queryParams
+                            );
+                            ?>
+                        </tr>
                     </thead>
                     <tbody>
                         <?php
                             foreach ($usuarios as $usuario) {
                         ?>
-                        <tr class="">
+                        <tr class="<?php echo $usuario['baja'] == 1 ?: 'bg-danger'; ?>">
                             <td><?php echo $usuario['nombre'] ?></td>
                             <td><?php echo $usuario['rol'] ?></td>
                             <td><?php echo $usuario['email'] ?></td>
@@ -154,27 +127,27 @@
                 <nav aria-label="Navegacion por paginas">
                     <ul class="pagination justify-content-center">
                         <li class="page-item">
-                            <a class="page-link" href="/proveedores?page=1&order=1" aria-label="First">
+                            <a class="page-link" href="/<?php echo $baseUrl ?>?page=1 <?php echo ($queryParamsPage !== '' ? "&$queryParamsPage" : '') ?>" aria-label="First">
                                 <span aria-hidden="true">&laquo;</span>
                                 <span class="sr-only">First</span>
                             </a>
                         </li>
                         <li class="page-item">
-                            <a class="page-link" href="/proveedores?page=2&order=1" aria-label="Previous">
+                            <a class="page-link" href="<?php echo $baseUrl ?>?page=<?php echo ($currentPage - 1) . ($queryParamsPage !== '' ? "&$queryParamsPage" : '')?>" aria-label="Previous">
                                 <span aria-hidden="true">&lt;</span>
                                 <span class="sr-only">Previous</span>
                             </a>
                         </li>
 
-                        <li class="page-item active"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item active"><a class="page-link" href="#"><?php echo $currentPage ?></a></li>
                         <li class="page-item">
-                            <a class="page-link" href="/proveedores?page=4&order=1" aria-label="Next">
+                            <a class="page-link" href="<?php echo $baseUrl ?>?page=<?php echo ($currentPage + 1) . ($queryParamsPage !== '' ? "&$queryParamsPage" : '')?>" aria-label="Next">
                                 <span aria-hidden="true">&gt;</span>
                                 <span class="sr-only">Next</span>
                             </a>
                         </li>
                         <li class="page-item">
-                            <a class="page-link" href="/proveedores?page=8&order=1" aria-label="Last">
+                            <a class="page-link" href="<?php echo $baseUrl ?>?page=<?php echo $maxPage . ($queryParamsPage !== '' ? "&$queryParamsPage" : '')?>" aria-label="Last">
                                 <span aria-hidden="true">&raquo;</span>
                                 <span class="sr-only">Last</span>
                             </a>

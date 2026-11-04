@@ -18,11 +18,22 @@ class UsuariosController extends BaseController
             'breadcrumb' => ['Inicio', 'Usuarios'],
         );
         $model = new UsuariosModel();
-        $data['usuarios'] = $model->getUsuarios();
+        $data['usuarios'] = $model->getFilterBy($_GET);
         $modelRol = new AuxRolUsuarios();
         $data['roles'] = $modelRol->getRol();
+        $data['idioma'] = $model->getIdiomas();
+        $data['order'] = $model->getOrder($_GET);
+        $data['currentPage'] = $model->getCurrentPage($_GET);
+        $data['maxPage'] = $model->getLastPage($_GET);
+
         $input = filter_var_array($_GET, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $data['input'] = $input;
+
+        $getOrder = $_GET;
+        $data['baseUrl'] = strtok($_SERVER['REQUEST_URI'] ?? '/', '?');
+        unset($getOrder['order']);
+        unset($getOrder['sentido']);
+        $data['queryParams'] = http_build_query($getOrder);
 
         $this->view->showViews(array('templates/header.view.php', 'usuarios.view.php', 'templates/footer.view.php'), $data);
 
