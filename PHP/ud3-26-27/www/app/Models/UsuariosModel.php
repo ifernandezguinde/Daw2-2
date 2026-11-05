@@ -12,6 +12,7 @@ class UsuariosModel extends BaseDbModel
     private const FROM = "FROM usuario_sistema u LEFT JOIN aux_rol aru ON aru.id_rol = u.id_rol ";
     private const ORDER_FIELDS = ['rol', 'u.email', 'u.nombre', 'u.idioma'];
     private const DEFAULT_ORDER = 1;
+    private const ROWS_PER_PAGE = 2;
 
 
     public function getIdiomas(): array
@@ -20,9 +21,8 @@ class UsuariosModel extends BaseDbModel
         return $stmt->fetchAll(\PDO::FETCH_COLUMN);
     }
 
-    public function getFilterBy(array $filtros): array
+    private function getWhere(array $filtros): array
     {
-        $sql = self::SELECT . self::FROM;
         $values = [];
         $condiciones = [];
         if (!empty($filtros['id_rol'])) {
@@ -41,6 +41,20 @@ class UsuariosModel extends BaseDbModel
             $condiciones[] = "idioma = :idioma";
             $values["idioma"] = $filtros['idioma'];
         }
+
+        return [
+            'values' => $values,
+            'condiciones' => $condiciones,
+        ];
+    }
+
+    public function getFilterBy(array $filtros): array
+    {
+        $sql = self::SELECT . self::FROM;
+        $resultadoWhere = $this->getWhere($filtros);
+        $condiciones = $resultadoWhere['condiciones'];
+        $values = $resultadoWhere['values'];
+
         if ($condiciones !== []) {
             $sql .= " WHERE " . implode(" AND ", $condiciones);
         }
@@ -49,6 +63,8 @@ class UsuariosModel extends BaseDbModel
         $sql .= " ORDER BY " . self::ORDER_FIELDS[$this->getOrder($filtros) - 1] . " $sentido";
 
         $currentPage = $this->getCurrentPage($filtros);
+
+        $sql .= " LIMIT " . (($currentPage - 1) * self::ROWS_PER_PAGE) . ", " . self::ROWS_PER_PAGE;
 
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute($values);
@@ -74,5 +90,25 @@ class UsuariosModel extends BaseDbModel
     public function getLastPage(array $filtros): int
     {
         return (int)ceil($this->getCountFilterBy($filtros) / self::ROWS_PER_PAGE);
+    }
+
+    public function getCountFilterBy(array $filtros): int
+    {
+        $sql = self::SELECT . self::FROM;
+        $resultadoWhere = $this->getWhere($filtros);
+        $condiciones = $resultadoWhere['condiciones'];
+        $values = $resultadoWhere['values'];
+
+        if ($condiciones !== []) {
+            $sql .= " WHERE " . implode(" AND ", $condiciones);
+        }
+
+        $sentido = !empty($filtros['sentido']) && $filtros['sentido'] === 'desc' ? 'DESC' : 'ASC';
+        $sql .= " ORDER BY " . self::ORDER_FIELDS[$this->getOrder($filtros) - 1] . " $sentido";
+
+
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute($values);
+        return $stmt->fetchColumn();
     }
 }
