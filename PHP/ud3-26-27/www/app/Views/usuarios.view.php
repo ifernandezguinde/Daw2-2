@@ -72,7 +72,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
                                 </div>
-                                <input type="text" name="ultimoAcceso" class="form-control float-right" id="ultimoAcceso">
+                                <input type="text" name="last_date" class="form-control float-right" id="ultimoAcceso">
                             </div>
                             <!-- /.input group -->
                         </div>

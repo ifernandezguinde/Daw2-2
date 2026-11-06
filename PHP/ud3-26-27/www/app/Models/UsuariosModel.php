@@ -43,10 +43,10 @@ class UsuariosModel extends BaseDbModel
             $condiciones[] = "idioma = :idioma";
             $values["idioma"] = $filtros['idioma'];
         }
-        // TODO que envíe el where a la sql
-        if (!empty($ultimoAcceso)) {
-            $range = explode('/', $ultimoAcceso);
-            $condiciones[] = "ultimoAcceso BETWEEN minRange = :minRange AND maxRange = :maxRange";
+        // TODO que envíe el where a la sql cambiar formato
+        if (!empty($last_date)) {
+            $range = explode('/', $last_date);
+            $condiciones[] = "last_date BETWEEN minRange = :minRange AND maxRange = :maxRange";
             $values["minRange"] = $range[0];
             $values["maxRange"] = $range[1];
         }
