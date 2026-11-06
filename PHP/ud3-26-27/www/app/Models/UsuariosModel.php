@@ -25,6 +25,8 @@ class UsuariosModel extends BaseDbModel
     {
         $values = [];
         $condiciones = [];
+
+
         if (!empty($filtros['id_rol'])) {
             $condiciones[] = "u.id_rol = :id_rol";
             $values["id_rol"] = $filtros['id_rol'];
@@ -40,6 +42,13 @@ class UsuariosModel extends BaseDbModel
         if (!empty($filtros['idioma'])) {
             $condiciones[] = "idioma = :idioma";
             $values["idioma"] = $filtros['idioma'];
+        }
+        // TODO que envíe el where a la sql
+        if (!empty($ultimoAcceso)) {
+            $range = explode('/', $ultimoAcceso);
+            $condiciones[] = "ultimoAcceso BETWEEN minRange = :minRange AND maxRange = :maxRange";
+            $values["minRange"] = $range[0];
+            $values["maxRange"] = $range[1];
         }
 
         return [
@@ -60,11 +69,11 @@ class UsuariosModel extends BaseDbModel
         }
 
         $sentido = !empty($filtros['sentido']) && $filtros['sentido'] === 'desc' ? 'DESC' : 'ASC';
-        $sql .= " ORDER BY " . self::ORDER_FIELDS[$this->getOrder($filtros) - 1] . " $sentido";
+        $sql .= " ORDER BY " . self::ORDER_FIELDS[$this->getOrder($filtros) -1] . " $sentido";
 
         $currentPage = $this->getCurrentPage($filtros);
 
-        $sql .= " LIMIT " . (($currentPage - 1) * self::ROWS_PER_PAGE) . ", " . self::ROWS_PER_PAGE;
+        $sql .= " LIMIT " . (($currentPage -1) * self::ROWS_PER_PAGE) . ", " . self::ROWS_PER_PAGE;
 
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute($values);
@@ -94,7 +103,7 @@ class UsuariosModel extends BaseDbModel
 
     public function getCountFilterBy(array $filtros): int
     {
-        $sql = self::SELECT . self::FROM;
+        $sql = "SELECT COUNT(*) " . self::FROM;
         $resultadoWhere = $this->getWhere($filtros);
         $condiciones = $resultadoWhere['condiciones'];
         $values = $resultadoWhere['values'];
@@ -104,7 +113,7 @@ class UsuariosModel extends BaseDbModel
         }
 
         $sentido = !empty($filtros['sentido']) && $filtros['sentido'] === 'desc' ? 'DESC' : 'ASC';
-        $sql .= " ORDER BY " . self::ORDER_FIELDS[$this->getOrder($filtros) - 1] . " $sentido";
+        $sql .= " ORDER BY " . self::ORDER_FIELDS[$this->getOrder($filtros) -1] . " $sentido";
 
 
         $stmt = $this->pdo->prepare($sql);

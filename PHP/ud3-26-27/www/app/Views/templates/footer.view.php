@@ -46,5 +46,29 @@ if(isset($js) && is_array($js)){
     }
 }
 ?>
+      <script>
+          //Date range picker
+          $(function () {
+              $('#ultimoAcceso').daterangepicker({
+                  autoUpdateInput: false,
+                  locale: {
+                      format: 'DD-MM-YYYY',
+                      cancelLabel: 'limpiar',
+                      applyLabel: 'Aplicar'
+                  }
+              });
+
+              // Evento para rellenar el input cuando el usuario pulsa "Aplicar"
+              $('#ultimoAcceso').on('apply.daterangepicker', function (ev, picker) {
+                  $(this).val(picker.startDate.format('DD-MM-YYYY') + ' / ' + picker.endDate.format('DD-MM-YYYY'));
+              });
+
+              // Evento para vaciar el input si pulsa "Limpiar" / "Cancel"
+              $('#ultimoAcceso').on('cancel.daterangepicker', function (ev, picker) {
+                  $(this).val('');
+              });
+          });
+
+      </script>
 </body>
 </html>

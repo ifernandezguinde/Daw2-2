@@ -33,6 +33,7 @@ class UsuariosController extends BaseController
         $data['baseUrl'] = strtok($_SERVER['REQUEST_URI'] ?? '/', '?');
         unset($getOrder['order']);
         unset($getOrder['sentido']);
+        unset($getOrder['page']);
         $data['queryParamsPage'] = http_build_query($getOrder);
 
         $this->view->showViews(array('templates/header.view.php', 'usuarios.view.php', 'templates/footer.view.php'), $data);

@@ -26,6 +26,12 @@
                         <p>Trabajadores</p>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="<?php echo $_ENV['host.folder'] ?>usuarios" class="nav-link <?php echo strtok($_SERVER['REQUEST_URI'] ?? '/', '?') === $_ENV['host.folder'] . 'usuarios' ? 'active' : ''; ?>">
+                        <i class="fas fa-briefcase nav-icon"></i>
+                        <p>Usuarios</p>
+                    </a>
+                </li>
               <li class="nav-item">
                 <a href="<?php echo $_ENV['host.folder'] ?>demo-proveedores" class="nav-link <?php echo strtok($_SERVER['REQUEST_URI'] ?? '/', '?') === $_ENV['host.folder'] . 'demo-proveedores' ? 'active' : ''; ?>">
                   <i class="fas fa-laptop-code nav-icon"></i>
