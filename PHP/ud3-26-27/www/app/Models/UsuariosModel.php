@@ -43,7 +43,7 @@ class UsuariosModel extends BaseDbModel
             $condiciones[] = "idioma = :idioma";
             $values["idioma"] = $filtros['idioma'];
         }
-        // TODO que envíe el where a la sql cambiar formato
+        // TODO que envíe el where a la sql (cambiar formato fecha)
         if (!empty($last_date)) {
             $range = explode('/', $last_date);
             $condiciones[] = "last_date BETWEEN minRange = :minRange AND maxRange = :maxRange";

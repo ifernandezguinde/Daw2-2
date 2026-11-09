@@ -112,7 +112,7 @@
                         <?php
                         require_once '../app/Helpers/form_helper.php';
                         echo printTableHeader(
-                                ['Username', 'Salario Bruto', 'Retención', 'Rol', 'País'],
+                                ['Username', 'Salario Bruto', 'Retención', 'Activo', 'Rol', 'País'],
                                 $order,
                                 $input['sentido'] ?? null,
                                 $queryParams
@@ -126,6 +126,7 @@
                         <td><?php echo $trabajador['username'] ?></td>
                         <td><?php echo $trabajador['salarioBruto'] ?></td>
                         <td><?php echo $trabajador['retencionIRPF'] ?>%</td>
+                        <td><?php echo $trabajador['activo'] == 1 ? 'si' : 'no' ?></td>
                         <td><?php echo $trabajador['nombre_rol'] ?></td>
                         <td><?php echo $trabajador['country_name'] ?></td>
                     </tr>

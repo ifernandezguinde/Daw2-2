@@ -118,15 +118,15 @@
                         <?php
                         foreach ($usuarios as $usuario) {
                             ?>
-                        <tr class="<?php echo $usuario['baja'] == 1 ?: 'bg-danger'; ?>">
+                        <tr class="<?php echo $usuario['baja'] == 1 ?: 'table-danger'; ?>">
                             <td><?php echo $usuario['nombre'] ?></td>
                             <td><?php echo $usuario['rol'] ?></td>
                             <td><?php echo $usuario['email'] ?></td>
                             <td><?php echo $usuario['idioma'] ?></td>
                             <td><?php echo $usuario['last_date'] ?></td>
                             <td>
-                                <a href="tel: 908080337" target="_blank" class="btn btn-success ml-1" data-toggle="tooltip" data-placement="top" title="908080337"><i class="fas fa-edit"></i></a>
-                                <a href="http://expcpé.net" target="_blank" class="btn btn-danger ml-1"><i class="fas fa-trash"></i></a>
+                                <a href="http://localhost:8080/usuarios/edit/" target="_blank" class="btn btn-success ml-1" data-toggle="tooltip" data-placement="top" title="908080337"><i class="fas fa-edit"></i></a>
+                                <a href="http://localhost:8080/usuarios/delete/" target="_blank" class="btn btn-danger ml-1" ><i class="fas fa-trash"></i></a>
                                 <a href="mailto: info@expcpé.net" target="_blank" class="btn btn-info" data-toggle="tooltip" data-placement="top" title="info@expcpé.net"><i class="fas fa-mail-bulk"></i></a>
                             </td>
                         </tr>

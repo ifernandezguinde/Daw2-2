@@ -162,4 +162,10 @@ class TrabajadorModel extends BaseDbModel
             return (int)$filtros['order'];
         }
     }
+    
+    // ALTA TRABAJADOR
+    public function insert($filtros)
+    {
+
+    }
 }
