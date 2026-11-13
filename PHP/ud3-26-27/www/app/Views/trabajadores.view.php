@@ -96,6 +96,10 @@
                 </div>
             </form>
         </div>
+        <div class="col-12 text-right">
+            <a href="<?php echo strtok($_SERVER['REQUEST_URI'] ?? '/', '?') ?>/new" value=""
+               class="btn btn-primary">Añadir Ususario</a>
+        </div>
     </div>
     <div class="col-12">
         <div class="card shadow mb-4">

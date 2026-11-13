@@ -69,4 +69,22 @@ class TrabajadorController extends BaseController
         $this->view->showViews(array('templates/header.view.php', 'trabajadores.view.php', 'templates/footer.view.php'), $data);
     }
 
+    public function newTrabajador(): void
+    {
+        $data = array(
+            'titulo' => 'Nuevo trabajador',
+            'breadcrumb' => ['Inicio', 'nuevo trabajador'],
+        );
+        $model = new TrabajadorModel();
+        $auxTrabajadorRolModel = new AuxRolTrabajadorModel();
+        $data['roles'] = $auxTrabajadorRolModel->getAll();
+        $countriesModel = new AuxCountriesModel();
+        $data['countries'] = $countriesModel->getAll();
+        $model->insertTrabajador($_GET);
+
+        $this->view->showViews(array('templates/header.view.php', 'insertForm.view.php', 'templates/footer.view.php'), $data);
+    }
+
+
+
 }

@@ -240,6 +240,24 @@ class FrontController
             'get'
         );
 
+        Route::add(
+            '/trabajadores/new',
+            function () {
+                $controlador = new \Com\Daw2\Controllers\TrabajadorController();
+                $controlador->newTrabajador();
+            },
+            'get'
+        );
+
+        Route::add(
+            '/trabajadores/add',
+            function () {
+                $controlador = new \Com\Daw2\Controllers\TrabajadorController();
+                $controlador->addTrabajador();
+            },
+            'get'
+        );
+
         Route::pathNotFound(
             function () {
                 $controller = new \Com\Daw2\Controllers\ErroresController();

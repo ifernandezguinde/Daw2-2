@@ -164,7 +164,7 @@ class TrabajadorModel extends BaseDbModel
     }
     
     // ALTA TRABAJADOR
-    public function insert($filtros)
+    public function insertTrabajador(array $usuario): void
     {
 
     }
