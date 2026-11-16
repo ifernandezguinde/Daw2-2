@@ -230,34 +230,39 @@ class FrontController
             },
             'get'
         );
-
-        Route::add(
-            '/usuarios',
-            function () {
-                $controlador = new \Com\Daw2\Controllers\UsuariosController();
-                $controlador->getUsuarios();
-            },
-            'get'
-        );
-
         Route::add(
             '/trabajadores/new',
             function () {
                 $controlador = new \Com\Daw2\Controllers\TrabajadorController();
-                $controlador->newTrabajador();
+                $controlador->new();
+            },
+            'get'
+        );
+        Route::add(
+            '/trabajadores/new',
+            function () {
+                $controlador = new \Com\Daw2\Controllers\TrabajadorController();
+                $controlador->doNew();
+            },
+            'post'
+        );
+        Route::add(
+            '/trabajadores/edit/(\w{4,50})',
+            function ($username) {
+                $controlador = new \Com\Daw2\Controllers\TrabajadorController();
+                $controlador->edit($username);
             },
             'get'
         );
 
         Route::add(
-            '/trabajadores/add',
+            '/usuarios-sistema',
             function () {
-                $controlador = new \Com\Daw2\Controllers\TrabajadorController();
-                $controlador->addTrabajador();
+                $controlador = new \Com\Daw2\Controllers\UsuariosSistemaController();
+                $controlador->index();
             },
             'get'
         );
-
         Route::pathNotFound(
             function () {
                 $controller = new \Com\Daw2\Controllers\ErroresController();
