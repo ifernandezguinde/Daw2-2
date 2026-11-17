@@ -129,9 +129,24 @@ class TrabajadorController extends BaseController
         $this->view->showViews(array('templates/header.view.php', 'trabajadores.edit.php', 'templates/footer.view.php'), $data);
     }
 
-    public function doEdit()
+    public function doEdit(): void
     {
-        //TODO
+        // que no compruebe que el usuario no existe
+        $errores = $this->checkTrabajadorForm($_POST);
+        if ($errores !== []) {
+            $this->new(
+                filter_var_array($_POST, FILTER_SANITIZE_FULL_SPECIAL_CHARS),
+                $errores
+            );
+        } else {
+            $trabajadoresModel = new TrabajadorModel();
+            $res = $trabajadoresModel->update($_POST);
+            if ($res !== true) {
+                echo 'Error';
+            } else {
+                header('Location: /trabajadores');
+            }
+        }
     }
 
     private function checkTrabajadorForm(array $datos): array

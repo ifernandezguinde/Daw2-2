@@ -254,6 +254,14 @@ class FrontController
             },
             'get'
         );
+        Route::add(
+            '/trabajadores/edit/(\w{4,50})',
+            function ($username) {
+                $controlador = new \Com\Daw2\Controllers\TrabajadorController();
+                $controlador->doEdit();
+            },
+            'post'
+        );
 
         Route::add(
             '/usuarios-sistema',
