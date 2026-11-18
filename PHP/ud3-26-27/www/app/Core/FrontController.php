@@ -258,9 +258,18 @@ class FrontController
             '/trabajadores/edit/(\w{4,50})',
             function ($username) {
                 $controlador = new \Com\Daw2\Controllers\TrabajadorController();
-                $controlador->doEdit();
+                $controlador->doEdit($username);
             },
             'post'
+        );
+
+        Route::add(
+            '/trabajadores/delete/(\w{4,50})',
+            function ($username) {
+                $controlador = new \Com\Daw2\Controllers\TrabajadorController();
+                $controlador->delete($username);
+            },
+            'get'
         );
 
         Route::add(

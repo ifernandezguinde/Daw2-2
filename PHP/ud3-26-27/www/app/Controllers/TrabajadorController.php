@@ -126,13 +126,13 @@ class TrabajadorController extends BaseController
         $data['roles'] = $auxTrabajadorRolModel->getAll();
         $countriesModel = new AuxCountriesModel();
         $data['countries'] = $countriesModel->getAll();
+
         $this->view->showViews(array('templates/header.view.php', 'trabajadores.edit.php', 'templates/footer.view.php'), $data);
     }
 
-    public function doEdit(): void
+    public function doEdit(string $username): void
     {
-        // que no compruebe que el usuario no existe
-        $errores = $this->checkTrabajadorForm($_POST);
+        $errores = $this->checkTrabajadorForm($_POST, $username);
         if ($errores !== []) {
             $this->new(
                 filter_var_array($_POST, FILTER_SANITIZE_FULL_SPECIAL_CHARS),
@@ -140,16 +140,26 @@ class TrabajadorController extends BaseController
             );
         } else {
             $trabajadoresModel = new TrabajadorModel();
-            $res = $trabajadoresModel->update($_POST);
-            if ($res !== true) {
-                echo 'Error';
+            if ($trabajadoresModel->update($_POST) === false) {
+                echo 'no se pudo actualizar';
             } else {
                 header('Location: /trabajadores');
             }
         }
+
     }
 
-    private function checkTrabajadorForm(array $datos): array
+    public function delete(string $username): void
+    {
+        $trabajadoresModel = new TrabajadorModel();
+        if ($trabajadoresModel->delete($username) === false) {
+            echo 'no se pudo eliminar';
+        } else {
+            header('Location: /trabajadores');
+        }
+    }
+
+    private function checkTrabajadorForm(array $datos, string $username = null): array
     {
         $errores = [];
         if (empty($datos['username'])) {
@@ -157,10 +167,12 @@ class TrabajadorController extends BaseController
         } elseif (!preg_match('/^[\p{L}0-9_]{4,50}$/', $datos['username'])) {
             $errores['username'] = 'Username solo acepta caracteres alfanuméricos y _. Longitud mínima: 4, máxima: 50';
         } else {
-            $trabajadorModel = new TrabajadorModel();
-            $trabajador = $trabajadorModel->find($datos['username']);
-            if ($trabajador !== false) {
-                $errores['username'] = 'El nombre de usuario ya está en uso';
+            if ($username === null) {
+                $trabajadorModel = new TrabajadorModel();
+                $trabajador = $trabajadorModel->find($datos['username']);
+                if ($trabajador !== false) {
+                    $errores['username'] = 'El nombre de usuario ya está en uso';
+                }
             }
         }
 
