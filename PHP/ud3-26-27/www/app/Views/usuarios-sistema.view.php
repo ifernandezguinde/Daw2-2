@@ -17,19 +17,16 @@ declare(strict_types=1);
                 <div class="card-body">
                     <!--<form action="./?sec=formulario" method="post">                   -->
                     <div class="row">
-                        <div class="col-12 col-lg-6">
+                        <div class="col-12 col-sm-6">
                             <div class="form-group">
-                                <label for="id_rol">Rol:</label>
-                                <select name="id_rol[]" id="id_rol" class="form-control select2" multiple="multiple">
-                                    <option value="">-</option>
-                                    <?php foreach ($roles as $role) {
-                                        ?>
-                                        <option value="<?php echo $role['id_rol'] ?>" <?php echo (isset($input['id_rol']) && in_array($role['id_rol'], $input['id_rol'])) ? 'selected' : ''; ?>><?php echo ucfirst($role['rol']); ?></option>
-                                        <?php
-                                    }
-                                    ?>
-                                </select>
-                                <p class="text-error small"><?php echo $errors['id_rol'] ?? ''; ?></p>
+                                <label for="nombre">Nombre:</label>
+                                <input type="text" class="form-control"
+                                       name="nombre" id="nombre"
+                                       value="<?php
+                                       echo $input['nombre'] ?? ''; ?>"
+                                       maxlength="255"
+                                       placeholder="Nombre"
+                                />
                             </div>
                         </div>
                         <div class="col-12 col-sm-6">
@@ -44,16 +41,19 @@ declare(strict_types=1);
                                 />
                             </div>
                         </div>
-                        <div class="col-12 col-sm-6">
+                        <div class="col-12 col-lg-6">
                             <div class="form-group">
-                                <label for="nombre">Nombre:</label>
-                                <input type="text" class="form-control"
-                                       name="nombre" id="nombre"
-                                       value="<?php
-                                        echo $input['nombre'] ?? ''; ?>"
-                                       maxlength="255"
-                                       placeholder="Nombre"
-                                />
+                                <label for="id_rol">Rol:</label>
+                                <select name="id_rol[]" id="id_rol" class="form-control select2" multiple="multiple">
+                                    <option value="">-</option>
+                                    <?php foreach ($roles as $role) {
+                                        ?>
+                                        <option value="<?php echo $role['id_rol'] ?>" <?php echo (isset($input['id_rol']) && in_array($role['id_rol'], $input['id_rol'])) ? 'selected' : ''; ?>><?php echo ucfirst($role['rol']); ?></option>
+                                        <?php
+                                    }
+                                    ?>
+                                </select>
+                                <p class="text-error small"><?php echo $errors['id_rol'] ?? ''; ?></p>
                             </div>
                         </div>
                         <div class="col-12 col-lg-6">

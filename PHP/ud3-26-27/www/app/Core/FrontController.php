@@ -280,6 +280,25 @@ class FrontController
             },
             'get'
         );
+
+        Route::add(
+            '/login',
+            function () {
+                $controlador = new \Com\Daw2\Controllers\UsuariosSistemaController();
+                $controlador->login();
+            },
+            'get'
+        );
+
+        Route::add(
+            '/usuarios-sistema/add',
+            function () {
+                $controlador = new \Com\Daw2\Controllers\UsuariosSistemaController();
+                $controlador->add();
+            },
+            'get'
+        );
+
         Route::pathNotFound(
             function () {
                 $controller = new \Com\Daw2\Controllers\ErroresController();

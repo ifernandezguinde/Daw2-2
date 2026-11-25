@@ -110,4 +110,43 @@ class UsuariosSistemaModel extends BaseDbModel
         return new SQLConditions($where, $values);
     }
 
+    public function getByEmail(string $email): array|false
+    {
+        $sql = "SELECT id_rol,email,pass,nombre,last_date,idioma,baja FROM usuarios WHERE email = :email";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute(['email' => $email]);
+        return $stmt->fetch();
+    }
+
+    public function getByNombre(string $nombre): array|false
+    {
+        $sql = self::SELECT . self::FROM . " WHERE nombre = :nombre";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute(['nombre' => $nombre]);
+        return $stmt->fetch();
+    }
+
+    public function getById(int $id_rol): array|false
+    {
+        $sql = "SELECT id_rol,email,pass,nombre,last_date,idioma,baja FROM usuarios WHERE id_rol = :id_rol";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute(['id_rol' => $id_rol]);
+        return $stmt->fetch();
+    }
+
+    public function getByIdioma(int $idioma): array|false
+    {
+        $sql = "SELECT id_rol,email,pass,nombre,last_date,idioma,baja FROM usuarios WHERE idioma = :idioma";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute(['idioma' => $idioma]);
+        return $stmt->fetch();
+    }
+
+    public function instert(array $datos): bool
+    {
+        $sql = "INSERT INTO usuarios (nombre, pass, email, rol, idioma) VALUES (:nombre, :pass, :email, :rol, :idioma) ";
+        $stmt = $this->pdo->prepare($sql);
+        return $stmt->execute($datos);
+    }
+
 }
