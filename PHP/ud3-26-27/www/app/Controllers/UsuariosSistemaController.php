@@ -11,6 +11,7 @@ use parallel\Events\Input;
 class UsuariosSistemaController extends BaseController
 {
     private const array IDIOMAS = ['en', 'es', 'gl'];
+
     public function index(): void
     {
         $data =
@@ -175,7 +176,7 @@ class UsuariosSistemaController extends BaseController
             $data = $_POST;
             $data['pass'] = password_hash($data['password'], PASSWORD_DEFAULT);
             $usuarioModel = new UsuariosSistemaModel();
-            $res = $usuarioModel->instert($data);
+            $res = $usuarioModel->insert($data);
         }
         if ($res !== true) {
             echo 'Error';
