@@ -6,7 +6,6 @@ namespace Com\Daw2\Controllers;
 use Com\Daw2\Core\BaseController;
 use Com\Daw2\Models\AuxRolModel;
 use Com\Daw2\Models\UsuariosSistemaModel;
-use parallel\Events\Input;
 
 class UsuariosSistemaController extends BaseController
 {
@@ -31,8 +30,6 @@ class UsuariosSistemaController extends BaseController
         $data['idiomas'] = self::IDIOMAS;
         $rolesModel = new AuxRolModel();
         $data['roles'] = $rolesModel->getAll();
-        $input = filter_var_array($_GET, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-        $data['input'] = $input;
         $getOrder = $_GET;
         unset($getOrder['order']);
         unset($getOrder['sentido']);
@@ -46,156 +43,159 @@ class UsuariosSistemaController extends BaseController
         $this->view->showViews(array('templates/header.view.php', 'usuarios-sistema.view.php', 'templates/footer.view.php'), $data);
     }
 
-//    public function login(string $error = ''): void
-//    {
-//        $this->view->show('login.view.php', ['error' => $error]);
-//
-//    }
-
-//    public function doLogin()
-//    {
-//        if (empty($_POST['email']) && empty($_POST['password'])){
-//            $error = 'Datos incorrectos.';
-//            $this->login($error);
-//        } else {
-//            $model = new UsuariosSistemaModel();
-//            $usuario = $model->getByEmail($_POST['email']);
-//            if ($usuario === false){
-//                $error = 'Datos incorrectos.';
-//                $this->login($error);
-//            } else {
-//                if ($usuario['password'] === password_verify($_POST['password'], $usuario['password'])){
-//                    session_regenerate_id(true);
-//                    $_SESSION['usuario'] = $usuario;
-//                }
-//            }
-//        }
-//    }
-
-    public function checkUsuariosSistema(array $datos): array
+    public function login(bool $error = false): void
     {
-        $errores = [];
-        if (empty($datos['nombre'])) {
-            $errores['nombre'] = 'Campo obligatorio';
-        } elseif (!preg_match('/^[\p{L}0-9_]{5,20}$/', $datos['nombre'])) {
-            $errores['nombre'] = 'El nombre solo acepta caracteres alfanuméricos y _. Longitud mínima: 5, máxima: 20';
-        } else {
-            if ($datos['nombre'] === null) {
-                $usuarioModel = new UsuariosSistemaModel();
-                $usuario = $usuarioModel->getByNombre($datos['nombre']);
-                if ($usuario !== false) {
-                    $errores['nombre'] = 'El nombre de usuario ya está en uso';
-                }
-            }
-        }
-
-        if (empty($datos['email'])) {
-            $errores['email'] = 'Campo obligatorio';
-        } elseif (filter_var($datos['email'], FILTER_VALIDATE_EMAIL) === false) {
-            $errores['email'] = 'Debe ser un email válido';
-        } else {
-            if ($datos['email'] === null) {
-                $usuarioModel = new UsuariosSistemaModel();
-                $usuarioEmail = $usuarioModel->getByEmail($datos['email']);
-                if ($usuarioEmail !== false) {
-                    $errores['email'] = 'El email ya está en uso';
-                }
-            }
-        }
-
-        if (empty($datos['password'])) {
-            $errores['pass'] = 'Campo obligatorio';
-        } elseif (!preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/', $datos['password'])) {
-            $errores['pass'] = 'La contraseña debe contener al menos una mayúscula, una minúscula, un número y tener una longitud mínima de 8 caracteres';
-        } elseif ($datos['pass2'] !== $datos['password']) {
-            $errores['pass2'] = 'Las contraseñas no coinciden';
-        }
-
-        if (!in_array(['Encargado', 'Staff', 'Administrador'], $datos['id_rol'])){
-            $errores['id_rol'] = 'Campo obligatorio';
-        } else {
-            if ($datos['id_rol'] === null) {
-                $usuarioModel = new UsuariosSistemaModel();
-                $usuarioId = $usuarioModel->getById($datos['id_rol']);
-                if ($usuarioId === false) {
-                    $errores['id_rol'] = 'el rol debe ser uno de la lista';
-                }
-            }
-        }
-
-        if (empty($datos['idioma'])) {
-            $errores['idioma'] = 'Campo obligatorio';
-        } else {
-            if ($datos['idioma'] === null) {
-                $usuarioModel = new UsuariosSistemaModel();
-                $usuarioIdioma = $usuarioModel->getByIdioma($datos['idioma']);
-                if ($usuarioIdioma === false) {
-                    $errores['idioma'] = 'El idioma debe ser uno de la lista';
-                }
-            }
-        }
-
-        return $errores;
+        $this->view->show('login.view.php', ['error' => $error]);
     }
 
-    public function add( array $errores = []): void
+    public function doLogin(): void
     {
-        $data = array(
-            'titulo' => 'Alta Usuario',
-            'breadcrumb' => ['Inicio', 'Usuarios-sistema', 'add'],
-            'errores' => $errores
-        );
+        $error = false;
+        if(!empty($_POST['email']) && !empty($_POST['pass'])){
+            $email = $_POST['email'];
+            $password = $_POST['pass'];
+            $usuario = (new UsuariosSistemaModel())->getByEmail($email);
+            if($usuario !== false && password_verify($password, $usuario['pass'])) {
+                session_regenerate_id(true);
+                $_SESSION['usuario'] = $usuario;
+            } else {
+                $error = true;
+            }
+        } else {
+            $error = true;
+        }
+        if(!$error) {
+            header('Location: /');
+        } else {
+            $this->login(true);
+        }
+    }
+
+
+    public function new(array $input = [], array $errors = []): void
+    {
+        $data =
+            [
+                'titulo' => 'Alta Usuario',
+                'breadcrumb' => ['Inicio', 'Usuarios Sistema', 'Alta usuario'],
+                'input' => $input,
+                'errors' => $errors,
+            ];
+        $rolModel = new AuxRolModel();
+        $data['roles'] = $rolModel->getAll();
         $data['idiomas'] = self::IDIOMAS;
-        $rolesModel = new AuxRolModel();
-        $data['roles'] = $rolesModel->getAll();
-
-        $this->view->showViews(array('templates/header.view.php', 'usuarios-sistema.add.php', 'templates/footer.view.php'), $data);
-
+        $this->view->showViews(array('templates/header.view.php', 'usuarios-sistema.edit.php', 'templates/footer.view.php'), $data);
     }
 
-    public function doAdd():void
+    public function doNew(): void
     {
-
-        $errores = $this->checkUsuariosSistema($_POST);
-        if ($errores !== []) {
-            $this->add(
-                $errores
-            );
-        } else {
-            $usuarioModel = new UsuariosSistemaModel();
-            $res = $usuarioModel->instert($_POST);
-        }
-        if ($res !== true) {
-            echo 'Error';
-        } else {
-            if (!isset($_POST['insertar_otro'])) {
+        $errors = $this->checkUsuarioForm($_POST);
+        if ($errors === []) {
+            $model = new UsuariosSistemaModel();
+            if ($model->insert($_POST)) {
                 header('Location: /usuarios-sistema');
             } else {
-                header('Location: /usuarios-sistema/add');
+                echo 'error';
             }
+        } else {
+            $this->new(filter_var_array($_POST, FILTER_SANITIZE_FULL_SPECIAL_CHARS), $errors);
+        }
+
+    }
+
+    public function edit(int $idUsuario, array $input = [], array $errors = []): void
+    {
+        $model = new UsuariosSistemaModel();
+        $usuario = $model->find($idUsuario);
+        if ($usuario === false) {
+            //TODO: Poner error en vista
+            header('Location: /usuarios-sistema');
+        } else {
+            $row = ($input === []) ? $usuario : $input;
+            $data =
+                [
+                    'titulo' => 'Editar Usuario',
+                    'breadcrumb' => ['Inicio', 'Usuarios Sistema', 'Editar usuario'],
+                    'input' => $row,
+                    'errors' => $errors,
+                ];
+            $rolModel = new AuxRolModel();
+            $data['roles'] = $rolModel->getAll();
+            $data['idiomas'] = self::IDIOMAS;
+            $this->view->showViews(array('templates/header.view.php', 'usuarios-sistema.edit.php', 'templates/footer.view.php'), $data);
         }
     }
 
-    public function edit(string $nombre, array $errores = []): void
+    public function doEdit(int $idUsuario): void
     {
-        $model = new UsuariosSistemaModel();
-        $usuario = $model->getByNombre($nombre);
-
-        if ($usuario == false) {
-            header('Location: /usuarios-sistema');
+        $errors = $this->checkUsuarioForm($_POST, $idUsuario);
+        if ($errors === []) {
+            $model = new UsuariosSistemaModel();
+            $ok = (empty($POST['password'])) ? $model->edit($idUsuario, $_POST) : $model->edit($idUsuario, $_POST) && $model->changePass($idUsuario, $_POST['password']);
+            if ($ok) {
+                header('Location: /usuarios-sistema');
+            } else {
+                echo 'error';
+            }
         } else {
-            $data = array(
-                'titulo' => 'Editar Usuario',
-                'breadcrumb' => ['Inicio', 'Usuarios-sistema', 'editar'],
-                'usuario' => $usuario,
-                'errors' => $errores
-            );
-            $auxRolModel = new AuxRolModel();
-            $data['roles'] = $auxRolModel->getAll();
-
-            $this->view->showViews(array('templates/header.view.php', 'usuarios-sistema.add.php', 'templates/footer.view.php'), $data);
-
+            $this->edit($idUsuario, filter_var_array($_POST, FILTER_SANITIZE_FULL_SPECIAL_CHARS), $errors);
         }
+    }
+
+    public function checkUsuarioForm(array $data, int $idUsuario = -1): array
+    {
+        $errors = [];
+        $model = new UsuariosSistemaModel();
+        if (empty($data['nombre'])) {
+            $errors['nombre'] = 'Campo obligatorio';
+        } else if (!preg_match('/^[\p{L}\p{N}_]{5,20}$/u', $data['nombre'])) {
+            $errors['nombre'] = 'Sólo se permiten letras, números y _. Longitud entre 5 y 20';
+        } else {
+            $row = $model->getByNombre($data['nombre']);
+            if ($row !== false && $row['id_usuario'] != $idUsuario) {
+                $errors['nombre'] = 'El nombre ya está en uso';
+            }
+        }
+
+        if (empty($data['email'])) {
+            $errors['email'] = 'Campo obligatorio';
+        } elseif (filter_var($data['email'], FILTER_VALIDATE_EMAIL) === false) {
+            $errors['email'] = 'Inserte un email válido';
+        } else {
+            $row = $model->getByEmail($data['email']);
+            if ($row !== false && $row['id_usuario'] != $idUsuario) {
+                $errors['email'] = 'El email ya está en uso';
+            }
+        }
+
+        if (empty($data['id_rol'])) {
+            $errors['id_rol'] = 'Campo obligatorio';
+        } elseif (filter_var($data['id_rol'], FILTER_VALIDATE_INT) === false) {
+            $errors['id_rol'] = 'Valor incorrecto';
+        } else {
+            $rolModel = new AuxRolModel();
+            if ($rolModel->find((int)$data['id_rol']) === false) {
+                $errors['id_rol'] = 'valor incorrecto (2)';
+            }
+        }
+
+        if (empty($data['idioma'])) {
+            $errors['idioma'] = 'Campo obligatorio';
+        } elseif(in_array($data['idioma'], self::IDIOMAS) === false) {
+            $errors['idioma'] = 'Valor incorrecto';
+        }
+
+        if ($idUsuario === -1 || $idUsuario > 0 && !empty($data['password'])) {
+            if (empty($data['password'])) {
+                $errors['password'] = 'Campo obligatorio';
+            } elseif (!preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/u', $data['password'])) {
+                $errors['password'] = 'La contraseña debe contener al menos una mayúscula, una minúscula y un número. Longitud >= 8';
+            } elseif ($data['password'] != $data['password2']) {
+                $errors['password'] = 'Las contraseñas no coinciden';
+            }
+        }
+
+        return $errors;
     }
 
 }

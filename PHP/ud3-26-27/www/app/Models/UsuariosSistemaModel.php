@@ -15,7 +15,7 @@ class UsuariosSistemaModel extends BaseDbModel
 
     private const array ORDER_BY = ['u.nombre', 'ar.rol', 'u.email', 'u.last_date', 'u.idioma'];
     private const int ORDER_DEFECTO = 1;
-    private const int PAGE_SIZE = 1;
+    private const int PAGE_SIZE = 25;
 
     public function getFilterBy(array $filtros): array
     {
@@ -110,15 +110,23 @@ class UsuariosSistemaModel extends BaseDbModel
         return new SQLConditions($where, $values);
     }
 
-    public function getByEmail(string $email): array|false
+    public function getByEmail(string $email): false|array
     {
-        $sql = "SELECT id_rol,email,pass,nombre,last_date,idioma,baja FROM usuario_sistema WHERE email = :email";
+        $sql = self::SELECT . self::FROM . " WHERE email = :email";
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute(['email' => $email]);
         return $stmt->fetch();
     }
 
-    public function getByNombre(string $nombre): array|false
+    public function find(int $id): array|false
+    {
+        $sql = self::SELECT . self::FROM . " WHERE id_usuario = :id_usuario";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute(['id_usuario' => $id]);
+        return $stmt->fetch();
+    }
+
+    public function getByNombre(string $nombre): false|array
     {
         $sql = self::SELECT . self::FROM . " WHERE nombre = :nombre";
         $stmt = $this->pdo->prepare($sql);
@@ -126,43 +134,44 @@ class UsuariosSistemaModel extends BaseDbModel
         return $stmt->fetch();
     }
 
-    public function getById(int $id_rol): array|false
+    public function insert(array $data): bool
     {
-        $sql = "SELECT id_rol,email,pass,nombre,last_date,idioma,baja FROM usuario_sistema WHERE id_rol = :id_rol";
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->execute(['id_rol' => $id_rol]);
-        return $stmt->fetch();
-    }
-
-    public function getByIdioma(int $idioma): array|false
-    {
-        $sql = "SELECT id_rol,email,pass,nombre,last_date,idioma,baja FROM usuario_sistema WHERE idioma = :idioma";
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->execute(['idioma' => $idioma]);
-        return $stmt->fetch();
-    }
-
-    public function instert(array $datos): bool
-    {
-        $sql = "INSERT INTO usuario_sistema (nombre, pass, email, id_rol, idioma, baja) VALUES (:nombre, :pass, :email, :id_rol, :idioma, 0) ";
+        $sql = "INSERT INTO usuario_sistema(id_rol, email, pass, nombre, idioma, baja) VALUES(:id_rol, :email, :pass, :nombre, :idioma, :baja);";
         $params = [
-            'nombre' => $datos['nombre'],
-            'pass' => password_hash($datos['password'], PASSWORD_DEFAULT),
-            'email' => $datos['email'],
-            'id_rol' => $datos['id_rol'],
-            'idioma' => $datos['idioma'],
-            'baja' => $datos['baja']
+            ':id_rol' => $data['id_rol'],
+            ':email' => $data['email'],
+            ':pass' => password_hash($data['password'], PASSWORD_DEFAULT),
+            ':nombre' => $data['nombre'],
+            ':idioma' => $data['idioma'],
+            ':baja' => (empty($data['baja'])) ? 0 : 1
+        ];
+        $stmt = $this->pdo->prepare($sql);
+        return $stmt->execute($params) && $stmt->rowCount() === 1;
+    }
+
+    public function edit(int $idUsuario, array $data): bool
+    {
+        $sql = "UPDATE usuario_sistema SET id_rol=:id_rol, email=:email, nombre=:nombre, idioma=:idioma, baja=:baja WHERE id_usuario=:id_usuario";
+        $params = [
+            ':id_rol' => $data['id_rol'],
+            ':email' => $data['email'],
+            ':nombre' => $data['nombre'],
+            ':idioma' => $data['idioma'],
+            ':baja' => (empty($data['baja'])) ? 0 : 1,
+            ':id_usuario' => $idUsuario
         ];
         $stmt = $this->pdo->prepare($sql);
         return $stmt->execute($params);
     }
 
-    public function update(array $datos): bool
-        {
-            $sql = "UPDATE usuario-sistema set  = :,  = :,  = :,  = :,  = : 
-                        WHERE  = :";
-            $stmt = $this->pdo->prepare($sql);
-            return ($stmt->execute($datos));
-        }
+    public function changePass(int $idUsuario, string $pass): bool
+    {
+        $sql = "UPDATE usuario_sistema SET pass=:pass WHERE id_usuario=:id_usuario";
+        $stmt = $this->pdo->prepare($sql);
+        return $stmt->execute([
+            'pass' => password_hash($pass, PASSWORD_DEFAULT),
+            'id_usuario' => $idUsuario
+        ]);
+    }
 
 }

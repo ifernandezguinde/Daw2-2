@@ -2,16 +2,14 @@
 
 namespace Com\Daw2\Core;
 
-use Com\Daw2\Controllers\CategoriaController;
-use Com\Daw2\Controllers\EjerciciosController;
-use Com\Daw2\Controllers\PreferenciasController;
-use Com\Daw2\Controllers\UsuarioSistemaController;
 use Steampixel\Route;
 
 class FrontController
 {
     public static function main()
     {
+        session_start();
+        //$_SESSION['usuario'] = 'Alba';
         Route::add(
             '/',
             function () {
@@ -21,11 +19,42 @@ class FrontController
             'get'
         );
         Route::add(
+            '/login',
+            function () {
+                $controlador = new \Com\Daw2\Controllers\UsuariosSistemaController();
+                $controlador->login();
+            },
+            'get'
+        );
+        Route::add(
+            '/login',
+            function () {
+                $controlador = new \Com\Daw2\Controllers\UsuariosSistemaController();
+                $controlador->doLogin();
+            },
+            'post'
+        );
+        Route::add(
+            '/preferencias',
+            function () {
+                $controlador = new \Com\Daw2\Controllers\PreferenciasController();
+                $controlador->showPreferencias();
+            },
+            'get'
+        );
+        Route::add(
+            '/preferencias',
+            function () {
+                $controlador = new \Com\Daw2\Controllers\PreferenciasController();
+                $controlador->savePreferencias();
+            },
+            'post'
+        );
+        Route::add(
             '/ejercicio1-strings',
             function () {
                 $controlador = new \Com\Daw2\Controllers\EjerciciosController();
                 $controlador->ejercicio1Strings();
-
             },
             'get'
         );
@@ -34,7 +63,6 @@ class FrontController
             function () {
                 $controlador = new \Com\Daw2\Controllers\EjerciciosController();
                 $controlador->ejercicio1operadores();
-
             },
             'get'
         );
@@ -43,7 +71,6 @@ class FrontController
             function () {
                 $controlador = new \Com\Daw2\Controllers\EjerciciosController();
                 $controlador->ejercicio2operadores();
-
             },
             'get'
         );
@@ -53,7 +80,6 @@ class FrontController
             function () {
                 $controlador = new \Com\Daw2\Controllers\EjerciciosController();
                 $controlador->ejercicio3operadores();
-
             },
             'get'
         );
@@ -63,7 +89,6 @@ class FrontController
             function () {
                 $controlador = new \Com\Daw2\Controllers\EjerciciosController();
                 $controlador->ejercicio4operadores();
-
             },
             'get'
         );
@@ -73,7 +98,6 @@ class FrontController
             function () {
                 $controlador = new \Com\Daw2\Controllers\EjerciciosController();
                 $controlador->ejercicio5operadores();
-
             },
             'get'
         );
@@ -82,7 +106,6 @@ class FrontController
             function () {
                 $controlador = new \Com\Daw2\Controllers\EjerciciosController();
                 $controlador->ejercicio6operadores();
-
             },
             'get'
         );
@@ -91,7 +114,6 @@ class FrontController
             function () {
                 $controlador = new \Com\Daw2\Controllers\EjerciciosController();
                 $controlador->ejercicio7operadores();
-
             },
             'get'
         );
@@ -101,7 +123,6 @@ class FrontController
             function () {
                 $controlador = new \Com\Daw2\Controllers\EjerciciosController();
                 $controlador->ejercicio8operadores();
-
             },
             'get'
         );
@@ -111,7 +132,6 @@ class FrontController
             function () {
                 $controlador = new \Com\Daw2\Controllers\EjerciciosController();
                 $controlador->ejercicio9operadores();
-
             },
             'get'
         );
@@ -121,7 +141,6 @@ class FrontController
             function () {
                 $controlador = new \Com\Daw2\Controllers\EjerciciosDecisionController();
                 $controlador->ejercicio5Decision();
-
             },
             'get'
         );
@@ -131,7 +150,6 @@ class FrontController
             function () {
                 $controlador = new \Com\Daw2\Controllers\IterativasController();
                 $controlador->ejercicio1();
-
             },
             'get'
         );
@@ -149,7 +167,6 @@ class FrontController
             function () {
                 $controlador = new \Com\Daw2\Controllers\IterativasController();
                 $controlador->ejercicio2();
-
             },
             'get'
         );
@@ -167,7 +184,6 @@ class FrontController
             function () {
                 $controlador = new \Com\Daw2\Controllers\IterativasController();
                 $controlador->ejercicio8();
-
             },
             'get'
         );
@@ -185,7 +201,6 @@ class FrontController
             function () {
                 $controlador = new \Com\Daw2\Controllers\IterativasController();
                 $controlador->ejercicio9();
-
             },
             'get'
         );
@@ -247,25 +262,24 @@ class FrontController
             'post'
         );
         Route::add(
-            '/trabajadores/edit/(\w{4,50})',
-            function ($username) {
+            '/trabajadores/edit/([\p{L}0-9_]{4,50})',
+            function (string $username) {
                 $controlador = new \Com\Daw2\Controllers\TrabajadorController();
                 $controlador->edit($username);
             },
             'get'
         );
         Route::add(
-            '/trabajadores/edit/(\w{4,50})',
-            function ($username) {
+            '/trabajadores/edit/([\p{L}0-9_]{4,50})',
+            function (string $username) {
                 $controlador = new \Com\Daw2\Controllers\TrabajadorController();
                 $controlador->doEdit($username);
             },
             'post'
         );
-
         Route::add(
-            '/trabajadores/delete/(\w{4,50})',
-            function ($username) {
+            '/trabajadores/delete/([\p{L}0-9_]{4,50})',
+            function (string $username) {
                 $controlador = new \Com\Daw2\Controllers\TrabajadorController();
                 $controlador->delete($username);
             },
@@ -280,34 +294,38 @@ class FrontController
             },
             'get'
         );
-
         Route::add(
-            '/login',
+            '/usuarios-sistema/new',
             function () {
                 $controlador = new \Com\Daw2\Controllers\UsuariosSistemaController();
-                $controlador->login();
+                $controlador->new();
             },
             'get'
         );
-
         Route::add(
-            '/usuarios-sistema/add',
+            '/usuarios-sistema/new',
             function () {
                 $controlador = new \Com\Daw2\Controllers\UsuariosSistemaController();
-                $controlador->add();
-            },
-            'get'
-        );
-
-        Route::add(
-            '/usuarios-sistema/add',
-            function () {
-                $controlador = new \Com\Daw2\Controllers\UsuariosSistemaController();
-                $controlador->doAdd();
+                $controlador->doNew();
             },
             'post'
         );
-
+        Route::add(
+            '/usuarios-sistema/edit/([0-9]+)',
+            function ($id) {
+                $controlador = new \Com\Daw2\Controllers\UsuariosSistemaController();
+                $controlador->edit((int)$id);
+            },
+            'get'
+        );
+        Route::add(
+            '/usuarios-sistema/edit/([0-9]+)',
+            function ($id) {
+                $controlador = new \Com\Daw2\Controllers\UsuariosSistemaController();
+                $controlador->doEdit((int)$id);
+            },
+            'post'
+        );
         Route::pathNotFound(
             function () {
                 $controller = new \Com\Daw2\Controllers\ErroresController();

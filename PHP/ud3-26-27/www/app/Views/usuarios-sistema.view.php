@@ -17,30 +17,6 @@ declare(strict_types=1);
                 <div class="card-body">
                     <!--<form action="./?sec=formulario" method="post">                   -->
                     <div class="row">
-                        <div class="col-12 col-sm-6">
-                            <div class="form-group">
-                                <label for="nombre">Nombre:</label>
-                                <input type="text" class="form-control"
-                                       name="nombre" id="nombre"
-                                       value="<?php
-                                       echo $input['nombre'] ?? ''; ?>"
-                                       maxlength="255"
-                                       placeholder="Nombre"
-                                />
-                            </div>
-                        </div>
-                        <div class="col-12 col-sm-6">
-                            <div class="form-group">
-                                <label for="email">Email:</label>
-                                <input type="text" class="form-control"
-                                       name="email" id="email"
-                                       value="<?php
-                                        echo $input['email'] ?? ''; ?>"
-                                       maxlength="255"
-                                       placeholder="usuario@email.org"
-                                />
-                            </div>
-                        </div>
                         <div class="col-12 col-lg-6">
                             <div class="form-group">
                                 <label for="id_rol">Rol:</label>
@@ -54,6 +30,30 @@ declare(strict_types=1);
                                     ?>
                                 </select>
                                 <p class="text-error small"><?php echo $errors['id_rol'] ?? ''; ?></p>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                            <div class="form-group">
+                                <label for="email">Email:</label>
+                                <input type="text" class="form-control"
+                                       name="email" id="email"
+                                       value="<?php
+                                       echo $input['email'] ?? ''; ?>"
+                                       maxlength="255"
+                                       placeholder="usuario@email.org"
+                                />
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                            <div class="form-group">
+                                <label for="nombre">Nombre:</label>
+                                <input type="text" class="form-control"
+                                       name="nombre" id="nombre"
+                                       value="<?php
+                                       echo $input['nombre'] ?? ''; ?>"
+                                       maxlength="255"
+                                       placeholder="Nombre"
+                                />
                             </div>
                         </div>
                         <div class="col-12 col-lg-6">
@@ -98,18 +98,14 @@ declare(strict_types=1);
                                 </div>
                             </div>
                         </div>
-                        <div class="col-12 text-right">
-                            <a href="<?php echo strtok($_SERVER['REQUEST_URI'] ?? '/', '?'); ?>" value="" name="reiniciar"
-                               class="btn btn-danger">Reiniciar filtros</a>
-                            <input type="submit" value="Aplicar filtros" class="btn btn-primary ml-2"/>
-                        </div>
                     </div>
                 </div>
         </div>
         <div class="card-footer">
             <div class="col-12 text-right">
-                <a href="/usuarios-sistema/add" value="" name="add"
-                   class="btn btn-danger">Añadir Usuario</a>
+                <a href="<?php echo strtok($_SERVER['REQUEST_URI'] ?? '/', '?'); ?>" value="" name="reiniciar"
+                   class="btn btn-danger">Reiniciar filtros</a>
+                <input type="submit" value="Aplicar filtros" class="btn btn-primary ml-2"/>
             </div>
         </div>
         </form>
@@ -119,7 +115,14 @@ declare(strict_types=1);
     <div class="card shadow mb-4">
         <div
                 class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-            <h6 class="m-0 font-weight-bold text-primary">Usuarios sistema</h6>
+            <div class="col-6">
+                <h6 class="m-0 font-weight-bold text-primary">Usuarios sistema</h6>
+            </div>
+            <div class="col-6">
+                <div class="m-0 font-weight-bold justify-content-end">
+                    <a href="/usuarios-sistema/new" class="btn btn-primary ml-1 float-right"><i class="fas fa-plus-circle"></i> Nuevo Usuario</a>
+                </div>
+            </div>
         </div>
         <?php
         if ($usuarios !== []) :
@@ -145,13 +148,13 @@ declare(strict_types=1);
                                 <a href="mailto: <?php echo $usuario['email'] ?>" target="_blank" class="btn btn-info"
                                    data-toggle="tooltip" data-placement="top" title="<?php echo $usuario['email'] ?>"><i
                                             class="fas fa-envelope"></i></a>
-                                <a href="usuarios-sistema/edit/<?php echo $usuario['nombre'] ?>"
+                                <a href="usuarios-sistema/edit/<?php echo $usuario['id_usuario'] ?>"
                                    class="btn btn-success ml-2"><i class="fas fa-edit"></i></a>
                                 <a href="usuarios-sistema/delete/<?php echo $usuario['id_usuario'] ?>"
                                    class="btn btn-danger"><i class="fas fa-trash"></i></a>
                             </td>
                         </tr>
-                        <?php
+                    <?php
                     endforeach;
                     ?>
                     </tbody>
@@ -179,7 +182,7 @@ declare(strict_types=1);
                                     <span class="sr-only">Previous</span>
                                 </a>
                             </li>
-                            <?php
+                        <?php
                         endif;
                         ?>
 
@@ -203,7 +206,7 @@ declare(strict_types=1);
                                     <span class="sr-only">Last</span>
                                 </a>
                             </li>
-                            <?php
+                        <?php
                         endif;
                         ?>
                     </ul>
@@ -213,7 +216,7 @@ declare(strict_types=1);
             <div class="card-body">
                 <div class="alert alert-warning">No existen usuarios que cumplen los requisitos específicados</div>
             </div>
-            <?php
+        <?php
         endif;
         ?>
     </div>
