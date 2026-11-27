@@ -112,7 +112,7 @@ class UsuariosSistemaModel extends BaseDbModel
 
     public function getByEmail(string $email): array|false
     {
-        $sql = "SELECT id_rol,email,pass,nombre,last_date,idioma,baja FROM usuarios WHERE email = :email";
+        $sql = "SELECT id_rol,email,pass,nombre,last_date,idioma,baja FROM usuario_sistema WHERE email = :email";
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute(['email' => $email]);
         return $stmt->fetch();
@@ -128,7 +128,7 @@ class UsuariosSistemaModel extends BaseDbModel
 
     public function getById(int $id_rol): array|false
     {
-        $sql = "SELECT id_rol,email,pass,nombre,last_date,idioma,baja FROM usuarios WHERE id_rol = :id_rol";
+        $sql = "SELECT id_rol,email,pass,nombre,last_date,idioma,baja FROM usuario_sistema WHERE id_rol = :id_rol";
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute(['id_rol' => $id_rol]);
         return $stmt->fetch();
@@ -136,7 +136,7 @@ class UsuariosSistemaModel extends BaseDbModel
 
     public function getByIdioma(int $idioma): array|false
     {
-        $sql = "SELECT id_rol,email,pass,nombre,last_date,idioma,baja FROM usuarios WHERE idioma = :idioma";
+        $sql = "SELECT id_rol,email,pass,nombre,last_date,idioma,baja FROM usuario_sistema WHERE idioma = :idioma";
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute(['idioma' => $idioma]);
         return $stmt->fetch();
@@ -144,9 +144,25 @@ class UsuariosSistemaModel extends BaseDbModel
 
     public function instert(array $datos): bool
     {
-        $sql = "INSERT INTO usuarios (nombre, pass, email, rol, idioma) VALUES (:nombre, :pass, :email, :rol, :idioma) ";
+        $sql = "INSERT INTO usuario_sistema (nombre, pass, email, id_rol, idioma, baja) VALUES (:nombre, :pass, :email, :id_rol, :idioma, 0) ";
+        $params = [
+            'nombre' => $datos['nombre'],
+            'pass' => password_hash($datos['password'], PASSWORD_DEFAULT),
+            'email' => $datos['email'],
+            'id_rol' => $datos['id_rol'],
+            'idioma' => $datos['idioma'],
+            'baja' => $datos['baja']
+        ];
         $stmt = $this->pdo->prepare($sql);
-        return $stmt->execute($datos);
+        return $stmt->execute($params);
     }
+
+    public function update(array $datos): bool
+        {
+            $sql = "UPDATE usuario-sistema set  = :,  = :,  = :,  = :,  = : 
+                        WHERE  = :";
+            $stmt = $this->pdo->prepare($sql);
+            return ($stmt->execute($datos));
+        }
 
 }

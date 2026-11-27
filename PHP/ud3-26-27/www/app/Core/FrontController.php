@@ -299,6 +299,15 @@ class FrontController
             'get'
         );
 
+        Route::add(
+            '/usuarios-sistema/add',
+            function () {
+                $controlador = new \Com\Daw2\Controllers\UsuariosSistemaController();
+                $controlador->doAdd();
+            },
+            'post'
+        );
+
         Route::pathNotFound(
             function () {
                 $controller = new \Com\Daw2\Controllers\ErroresController();

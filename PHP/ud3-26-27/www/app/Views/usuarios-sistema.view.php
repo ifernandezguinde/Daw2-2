@@ -98,14 +98,18 @@ declare(strict_types=1);
                                 </div>
                             </div>
                         </div>
+                        <div class="col-12 text-right">
+                            <a href="<?php echo strtok($_SERVER['REQUEST_URI'] ?? '/', '?'); ?>" value="" name="reiniciar"
+                               class="btn btn-danger">Reiniciar filtros</a>
+                            <input type="submit" value="Aplicar filtros" class="btn btn-primary ml-2"/>
+                        </div>
                     </div>
                 </div>
         </div>
         <div class="card-footer">
             <div class="col-12 text-right">
-                <a href="<?php echo strtok($_SERVER['REQUEST_URI'] ?? '/', '?'); ?>" value="" name="reiniciar"
-                   class="btn btn-danger">Reiniciar filtros</a>
-                <input type="submit" value="Aplicar filtros" class="btn btn-primary ml-2"/>
+                <a href="/usuarios-sistema/add" value="" name="add"
+                   class="btn btn-danger">Añadir Usuario</a>
             </div>
         </div>
         </form>
@@ -141,7 +145,7 @@ declare(strict_types=1);
                                 <a href="mailto: <?php echo $usuario['email'] ?>" target="_blank" class="btn btn-info"
                                    data-toggle="tooltip" data-placement="top" title="<?php echo $usuario['email'] ?>"><i
                                             class="fas fa-envelope"></i></a>
-                                <a href="usuarios-sistema/edit/<?php echo $usuario['id_usuario'] ?>"
+                                <a href="usuarios-sistema/edit/<?php echo $usuario['nombre'] ?>"
                                    class="btn btn-success ml-2"><i class="fas fa-edit"></i></a>
                                 <a href="usuarios-sistema/delete/<?php echo $usuario['id_usuario'] ?>"
                                    class="btn btn-danger"><i class="fas fa-trash"></i></a>

@@ -11,7 +11,6 @@ use parallel\Events\Input;
 class UsuariosSistemaController extends BaseController
 {
     private const array IDIOMAS = ['en', 'es', 'gl'];
-
     public function index(): void
     {
         $data =
@@ -105,22 +104,14 @@ class UsuariosSistemaController extends BaseController
         }
 
         if (empty($datos['password'])) {
-            $errores['password'] = 'Campo obligatorio';
+            $errores['pass'] = 'Campo obligatorio';
         } elseif (!preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/', $datos['password'])) {
-            $errores['password'] = 'La contraseña debe contener al menos una mayúscula, una minúscula, un número y tener una longitud mínima de 8 caracteres';
-        } else {
-            if ($datos['password'] === null) {
-                $usuarioModel = new UsuariosSistemaModel();
-                $usuariopass = $usuarioModel->getByEmail($datos['email']);
-                if ($usuariopass !== false) {
-                    $errores['password'] = 'El email ya está en uso';
-                }
-            } elseif ($datos['pass2'] !== $datos['password']) {
-                    $errores['pass2'] = 'Las contraseñas no coinciden';
-            }
+            $errores['pass'] = 'La contraseña debe contener al menos una mayúscula, una minúscula, un número y tener una longitud mínima de 8 caracteres';
+        } elseif ($datos['pass2'] !== $datos['password']) {
+            $errores['pass2'] = 'Las contraseñas no coinciden';
         }
 
-        if (empty($datos['id_rol'])){
+        if (!in_array(['Encargado', 'Staff', 'Administrador'], $datos['id_rol'])){
             $errores['id_rol'] = 'Campo obligatorio';
         } else {
             if ($datos['id_rol'] === null) {
@@ -147,13 +138,12 @@ class UsuariosSistemaController extends BaseController
         return $errores;
     }
 
-    public function add(array $input = [], array $errores = []): void
+    public function add( array $errores = []): void
     {
         $data = array(
             'titulo' => 'Alta Usuario',
             'breadcrumb' => ['Inicio', 'Usuarios-sistema', 'add'],
-            'input' => $input,
-            'errors' => $errores,
+            'errores' => $errores
         );
         $data['idiomas'] = self::IDIOMAS;
         $rolesModel = new AuxRolModel();
@@ -169,14 +159,11 @@ class UsuariosSistemaController extends BaseController
         $errores = $this->checkUsuariosSistema($_POST);
         if ($errores !== []) {
             $this->add(
-                filter_var_array($_POST, FILTER_SANITIZE_FULL_SPECIAL_CHARS),
                 $errores
             );
         } else {
-            $data = $_POST;
-            $data['pass'] = password_hash($data['password'], PASSWORD_DEFAULT);
             $usuarioModel = new UsuariosSistemaModel();
-            $res = $usuarioModel->insert($data);
+            $res = $usuarioModel->instert($_POST);
         }
         if ($res !== true) {
             echo 'Error';
@@ -186,6 +173,28 @@ class UsuariosSistemaController extends BaseController
             } else {
                 header('Location: /usuarios-sistema/add');
             }
+        }
+    }
+
+    public function edit(string $nombre, array $errores = []): void
+    {
+        $model = new UsuariosSistemaModel();
+        $usuario = $model->getByNombre($nombre);
+
+        if ($usuario == false) {
+            header('Location: /usuarios-sistema');
+        } else {
+            $data = array(
+                'titulo' => 'Editar Usuario',
+                'breadcrumb' => ['Inicio', 'Usuarios-sistema', 'editar'],
+                'usuario' => $usuario,
+                'errors' => $errores
+            );
+            $auxRolModel = new AuxRolModel();
+            $data['roles'] = $auxRolModel->getAll();
+
+            $this->view->showViews(array('templates/header.view.php', 'usuarios-sistema.add.php', 'templates/footer.view.php'), $data);
+
         }
     }
 

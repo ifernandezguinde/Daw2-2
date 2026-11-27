@@ -164,5 +164,4 @@ class TrabajadorModel extends BaseDbModel
         $stmt = $this->pdo->prepare($sql);
         return ($stmt->execute(['username' => $username]) && $stmt->rowCount() === 1);
     }
-
 }

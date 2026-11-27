@@ -22,6 +22,7 @@ declare(strict_types=1);
                                maxlength="255"
                                placeholder="Nombre"
                         />
+                        <p class="text-danger small"><?php echo $errors['nombre'] ?? ''; ?></p>
                     </div>
                 </div>
                 <div class="col-12 col-sm-6">
@@ -33,6 +34,7 @@ declare(strict_types=1);
                                minlength="8"
                                placeholder="introducir unha contraseña"
                         />
+                        <p class="text-danger small"><?php echo $errors['pass'] ?? ''; ?></p>
                     </div>
                 </div>
                 <div class="col-12 col-sm-6">
@@ -44,6 +46,7 @@ declare(strict_types=1);
                                minlength="8"
                                placeholder="confirmar contraseña"
                         />
+                        <p class="text-danger small"><?php echo $errors['pass2'] ?? ''; ?></p>
                     </div>
                 </div>
                 <div class="col-12 col-sm-6">
@@ -56,6 +59,7 @@ declare(strict_types=1);
                                maxlength="255"
                                placeholder="usuario@email.org"
                         />
+                        <p class="text-danger small"><?php echo $errors['email'] ?? ''; ?></p>
                     </div>
                 </div>
                 <div class="col-12 col-lg-6">
@@ -70,7 +74,7 @@ declare(strict_types=1);
                             }
                             ?>
                         </select>
-                        <p class="text-error small"><?php echo $errors['id_rol'] ?? ''; ?></p>
+                        <p class="text-danger small"><?php echo $errors['id_rol'] ?? ''; ?></p>
                     </div>
                 </div>
                 <div class="col-12 col-lg-6">
@@ -85,14 +89,14 @@ declare(strict_types=1);
                             }
                             ?>
                         </select>
-                        <p class="text-error small"><?php echo $errors['idioma'] ?? ''; ?></p>
+                        <p class="text-danger small"><?php echo $errors['idioma'] ?? ''; ?></p>
                     </div>
                 </div>
             </div>
         </div>
         <div class="card-footer">
             <div class="col-12 text-right">
-                <a href="/trabajadores" class="btn btn-danger">Cancelar</a>
+                <a href="/usuarios-sistema" class="btn btn-danger">Cancelar</a>
                 <input type="submit" value="Guardar" class="btn btn-primary ml-2"/>
                 <?php
                 if ($titulo == 'Alta Usuario')
